@@ -1,0 +1,90 @@
+@font-face{font-family: 'Comfortaa';font-style:regular;font-weight:400;src:url(../font/Comfortaa-Regular.ttf) format('truetype');}
+body{margin:0;padding:0;overflow-x:hidden;text-align:center;font-family:Calibri,'PT Sans',sens-serif;background:linear-gradient(135deg,#fff,#fffaf7 10%,#fff3ea 20%,#f5f3f0 33%,#ddf3ff 66%,#d0f1c9) 50% fixed;font-family:Comfortaa,Verdana,"Helvetica Neue",Helvetica,Arial,sans-serif;}
+body > buttons{position:fixed;top:0.5em;z-index:8;opacity:0.8;left:0.25em;}
+buttons button{margin:0 0.25em;}
+button{background:rgba(255,255,255,0.6);border:solid 1px rgba(0,0,0,0.2);padding:0.5em 1em;border-radius:1em;outline:none;}
+h1{font-weight:normal;margin-top:0.3em;}
+table{width:100% !important;}
+th{text-align:left;}
+td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    max-width: 60em;
+}
+td selection{position:absolute;top:0.2em;}
+#contacts td>span{cursor:pointer;}
+status{position:relative;}
+button{margin-left:0.2em;}
+entry {
+    overflow: auto;
+    font-size: 0.8em;
+    width: 100%;
+    display: inline-block;
+    white-space: nowrap;
+}
+entry buttons {
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+login, notification{position:fixed;width:20em;background:rgba(230,230,230,0.95);z-index:9;left:50%;margin-left:-11em;top:3em;padding:1em;border-radius:1em;box-shadow:0 0 5em rgba(0,0,0,0.3);}
+login input, notification input{width:100%;margin-bottom:1em;}
+notification textarea{width:100%;height:10em;margin-bottom:1em;}
+#contacts status{padding-left:2em;}
+status.dead::before{content:'☠';}
+status.rain::before{content:'⛈';color:darkblue;}
+status.cloud::before{content:'☁';color:lightgrey;}
+status.sun::before{content:'☀';color:greenyellow;}
+status::before{position:absolute;left:-0.2em;font-size:1.5em;margin-top:-0.25em;}
+.statistics{margin-bottom:1em;}
+.statistics td{width:50%;}
+.statistics td:nth-child(1){text-align:right;}
+select{border-right:none;border-top:none;border-bottom:none;border-left-color:grey;border-left-width:1px;border-radius:0;user-select:none;outline:none !important;margin-bottom:1em;font-size:0.7em;}
+table img{max-height:15em;padding:0.2em;margin:0 0.25em;background:rgb(240,240,240);}
+.dataTables_info{display:none;}
+.dataTables_filter{margin-right:1em;}
+label{cursor:pointer;}
+table.dataTable thead .sorting, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc {background-image:none !important;}
+th {padding:8px 10px !important;}
+#contacts_filter{display:none;}
+.filter{text-align:right;position:fixed;top:0.8em;right:1em;z-index:8;opacity:0.8;}
+.filter drillDownTitle{color:darkblue;font-size:0.7em;}
+*::-webkit-scrollbar{display:none;}
+actions{display:none;text-align:right;}
+body.edit actions{display:block;}
+charts{position:fixed;width:90%;left:5%;top:5%;height:90%;transition:all 0.5s ease-out 0s;z-index:11;border-radius:1em;box-shadow:0 0 3em rgba(0,0,0,0.5);background:white;overflow:auto;}
+charts canvas{max-height:100%;}
+charts select{width:100%;}
+charts select option{padding:0.6em 0.4em;}
+charts td{vertical-align:top;}
+#feedback_wrapper{
+	background: white;
+    position: absolute;
+    width: 90%;
+    top: 3em;
+    left: 5%;
+    padding: 1em 0;
+    border-radius: 1em;
+    box-shadow: 0 0 2em rgb(0 0 0 / 50%);
+}
+#feedback_wrapper {
+    max-height: 85vh;
+    position: fixed;
+	overflow-y: auto;
+}
+entry label {
+    width: 10em;
+    text-align: right;
+    padding: 0.25em;
+    position: relative;
+    display: inline-block;
+    color: darkgoldenrod;
+    vertical-align: top;
+}
+entry value {
+    position: relative;
+    display: inline-block;
+    padding: 0.25em;
+}

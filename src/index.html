@@ -1,0 +1,130 @@
+<html>
+
+<head>
+    <title>findapp support center</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <link rel="stylesheet" type="text/css" href="css/dataTable.css" />
+    <script defer type="text/javascript" src="js/main.js"></script>
+</head>
+
+<body>
+    <h1>findapp support center</h1>
+    <table class="statistics">
+        <tr>
+            <td>Registrierungen:</td>
+            <td>
+                <regs></regs>
+            </td>
+        </tr>
+    </table>
+    <div class="filter">
+        <drillDownTitle></drillDownTitle>
+        <filtered></filtered>
+        <input id="search" />
+    </div>
+    <buttons>
+        <button onclick="charts.toggle()">Charts</button>
+        <button onclick="api.chatTestrun(event)">Chat</button>
+        <button onclick="doc.toggleNotification(event)">Nachricht</button>
+        <button onclick="api.feedback()">Feedback</button>
+    </buttons>
+    <login>
+        <input />
+        <input type="password" />
+        <button onclick="api.init()">Einloggen</button>
+    </login>
+    <notification style="display:none;">
+        <textarea placeholder="Text"></textarea>
+        <input placeholder="Action" />
+        <button onclick="api.notification()">Senden</button>
+    </notification>
+    <table id="contacts" class="display">
+        <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Registriert am</th>
+                <th>Geändert am</th>
+                <th>Betriebssystem</th>
+                <th>Sprache</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Registriert am</th>
+                <th>Geändert am</th>
+                <th>Betriebssystem</th>
+                <th>Sprache</th>
+                <th>Status</th>
+            </tr>
+        </tfoot>
+    </table>
+    <table id="feedback" class="display" style="display:none;">
+        <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Typ</th>
+                <th>Erstellt am</th>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Gerät</th>
+                <th>Sprache</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Typ</th>
+                <th>Erstellt am</th>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Gerät</th>
+                <th>Sprache</th>
+                <th>Status</th>
+            </tr>
+        </tfoot>
+    </table>
+    <charts style="transform:scale(0);">
+        <table>
+            <tr>
+                <td style="width:13%;padding:0.5em 0 0 0.25em;">
+                    <select size="3" onchange="charts.chooseCategory()" id="chartCategory" style="height:7.2em;">
+                        <option value="registration" selected="selected">Registrierungen</option>
+                        <option value="growthRegistration">Wachstum</option>
+                        <option value="others">Sonstiges</option>
+                    </select>
+                    <br />
+                    <select size="5" onchange="charts.draw()" id="chartDataType" style="height:12em;">
+                        <option value="byDay" category="registration,growthRegistration">nach Tagen</option>
+                        <option value="byWeek" category="registration,growthRegistration">nach Wochen</option>
+                        <option value="byMonth" category="registration,growthRegistration">nach Monaten</option>
+                        <option value="byDayOfWeek" category="registration">nach Wochentag</option>
+                        <option value="byDayTime" category="registration">nach Uhrzeit</option>
+                    </select>
+                    <br />
+                    <select size="3" onchange="charts.draw()" id="chartTimespan" style="height:7.2em;">
+                        <option value="month" selected="selected">Monat</option>
+                        <option value="year">Jahr</option>
+                        <option value="all">Alle</option>
+                    </select>
+                    <div style="text-align:center;margin-top:1em;"><button onclick="charts.save()">Speichern</button>
+                    </div>
+                </td>
+                <td style="width:87%;">
+                    <canvas id="chart"></canvas>
+                </td>
+            </tr>
+        </table>
+    </charts>
+</body>
+
+</html>

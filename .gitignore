@@ -1,0 +1,10 @@
+target
+.settings
+.classpath
+.factorypath
+.project
+node_modules
+dist
+passwd
+build.sh
+src/main/resources/application.properties
