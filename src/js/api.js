@@ -45,21 +45,6 @@ class api {
             });
         }, 50);
     }
-    static deleteFeedback(id) {
-        $.ajax({
-            url: api.url + 'feedback/' + id,
-            type: 'DELETE',
-            success(r) {
-                for (var i = 0; i < doc.feedbackTable.rows().indexes().length; i++) {
-                    if (doc.feedbackTable.row(i).data().id == id) {
-                        doc.feedbackTable.row(i).remove();
-                        doc.feedbackTable.table().draw();
-                        break;
-                    }
-                }
-            }
-        });
-    }
     static feedback() {
         var e = $('#feedback_wrapper');
         if (e.length && e.css('display') != 'none') {
@@ -71,6 +56,16 @@ class api {
             type: 'GET',
             success(r) {
                 doc.feedback(r);
+            }
+        });
+    }
+    static log() {
+        $.ajax({
+            url: api.url + 'log?search=' + doc.logSearch,
+            type: 'GET',
+            success(r) {
+                doc.log(r);
+                $('input.log_search').focus();
             }
         });
     }

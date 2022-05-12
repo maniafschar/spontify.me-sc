@@ -28,6 +28,7 @@
         <button onclick="api.chatTestrun(event)">Chat</button>
         <button onclick="doc.toggleNotification(event)">Nachricht</button>
         <button onclick="api.feedback()">Feedback</button>
+        <button onclick="doc.toggleLog()">Log</button>
     </buttons>
     <login>
         <input />
@@ -90,6 +91,30 @@
                 <th>Gerät</th>
                 <th>Sprache</th>
                 <th>Status</th>
+            </tr>
+        </tfoot>
+    </table>
+    <table id="log" class="display" style="display:none;">
+        <thead>
+            <tr>
+                <th></th>
+                <th>createdAt</th>
+                <th>method</th>
+                <th>uri</th>
+                <th>contactId</th>
+                <th>time</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>createdAt</th>
+                <th>method</th>
+                <th>uri</th>
+                <th>contactId</th>
+                <th>time</th>
+                <th>status</th>
             </tr>
         </tfoot>
     </table>
