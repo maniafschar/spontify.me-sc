@@ -14,7 +14,6 @@ class doc {
 		for (var i = 1; i < r.length; i++) {
 			data.push(api.convert(r[0], r[i]));
 			data[i - 1].createdAt = start.getDisplayDate(data[i - 1].createdAt);
-			data[i - 1].type = data[i - 1].type ? data[i - 1].type.toLowerCase() : '';
 		}
 		// prepare table
 		if (doc.feedbackTable)
@@ -86,6 +85,7 @@ class doc {
 		for (var i = 1; i < r.length; i++) {
 			data.push(api.convert(r[0], r[i]));
 			data[i - 1].createdAt = start.getDisplayDate(data[i - 1].createdAt);
+			data[i - 1].modifiedAt = start.getDisplayDate(data[i - 1].modifiedAt);
 		}
 		// prepare table
 		if (doc.logTable)

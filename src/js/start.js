@@ -25,6 +25,8 @@ class start {
         $('.statistics regs').html(s);
     }
     static getDisplayDate(time) {
+        if (!time)
+            return;
         var d = new Date(time);
         return (d.getYear() - 100) + '-'
             + ('0' + (d.getMonth() + 1)).slice(-2) + '-'

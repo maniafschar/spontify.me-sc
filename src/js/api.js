@@ -61,7 +61,7 @@ class api {
     }
     static log() {
         $.ajax({
-            url: api.url + 'log?search=' + doc.logSearch,
+            url: api.url + 'log?search=' + encodeURIComponent(doc.logSearch),
             type: 'GET',
             success(r) {
                 doc.log(r);
