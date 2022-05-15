@@ -33,12 +33,11 @@ class doc {
 					'width': '5%'
 				},
 				{ 'data': 'id', 'width': '10%' },
-				{ 'data': 'type', 'width': '10%' },
 				{ 'data': 'createdAt', 'width': '15%' },
 				{ 'data': 'pseudonym', 'width': '20%' },
-				{ 'data': 'version', 'width': '10%' },
-				{ 'data': 'device', 'width': '10%' },
-				{ 'data': 'lang', 'width': '10%' },
+				{ 'data': 'version', 'width': '15%' },
+				{ 'data': 'device', 'width': '15%' },
+				{ 'data': 'lang', 'width': '15%' },
 				{ 'data': 'status', 'width': '10%' }
 			],
 			'paging': false
