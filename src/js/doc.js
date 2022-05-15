@@ -143,7 +143,7 @@ class doc {
 	static showDetails(row) {
 		var s = '';
 		for (var n in row) {
-			if (row[n] && n.indexOf('Display') < 0 && n != 'actions')
+			if (row[n] != null && n.indexOf('Display') < 0 && n != 'actions')
 				s += '<label>' + n + '</label><value>' + row[n] + '</value><br/>';
 		}
 		if (row.verified == 0)
