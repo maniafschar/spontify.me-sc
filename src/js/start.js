@@ -1,5 +1,6 @@
 import { doc } from "./doc";
 import { charts } from "./charts";
+import { api } from "./api";
 
 export { start };
 
@@ -95,6 +96,7 @@ class start {
             var tot = data.length;
             $('filtered').text(fil == tot ? '' : ' ' + fil + '/' + tot);
         });
+        $('input#search').val('');
         $('input#search').on('keyup', doc.search);
         $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
@@ -148,8 +150,19 @@ $(function () {
         crossDomain: true,
         cache: false,
         timeout: 60000,
-        beforeSend: start.beforeServerCall
+        beforeSend: start.beforeServerCall,
+        error: function (e) {
+            window.localStorage.removeItem('credentials');
+            window.location.reload();
+        }
     });
+    if (window.localStorage.getItem('credentials')) {
+        start.user = window.localStorage.getItem('credentials').split('\u0015');
+        start.password = start.user[1];
+        start.user = start.user[0];
+        api.init(true);
+    } else
+        $('login').css('display', '');
 });
 
 class sha256 {

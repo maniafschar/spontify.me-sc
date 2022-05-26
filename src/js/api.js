@@ -69,9 +69,11 @@ class api {
             }
         });
     }
-    static init() {
-        start.user = $('login input')[0].value;
-        start.password = $('login input')[1].value;
+    static init(event) {
+        if ($('login input')[0].value) {
+            start.user = $('login input')[0].value;
+            start.password = $('login input')[1].value;
+        }
         $.ajax({
             url: api.url + 'user',
             type: 'GET',
@@ -79,24 +81,28 @@ class api {
                 start.data = [];
                 for (var i = 1; i < r.length; i++)
                     start.data.push(api.convert(r[0], r[i]));
+                if (event === true || event && event.shiftKey)
+                    window.localStorage.setItem('credentials', start.user + '\u0015' + start.password);
+                else
+                    window.localStorage.removeItem('credentials');
                 start.init();
             }
         });
     }
     static notification() {
-        var ids = $('selection').parents('tr').children('td:nth-child(2)').map(function () {
+        var id = $('selection').parents('tr').children('td:nth-child(2)').map(function () {
             return $(this).text();
         }).get();
-        if (ids.length == 0 || !$('notification textarea').val())
+        if (id.length == 0 || !$('notification textarea').val())
             return;
-        var form = new FormData();
-        form.append('ids', ids);
-        form.append('text', $('notification textarea').val());
-        form.append('action', $('notification input').val());
         $.ajax({
             url: api.url + 'notify',
             type: 'POST',
-            data: form,
+            contentType: 'application/json',
+            data: JSON.stringify({
+                ids: id,
+                text: $('notification textarea').val()
+            }),
             success(r) {
                 $('notification').css('display', 'none');
             }

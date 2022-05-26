@@ -143,7 +143,7 @@ class doc {
 	static showDetails(row) {
 		var s = '';
 		for (var n in row) {
-			if (row[n] != null && n.indexOf('Display') < 0 && n != 'actions')
+			if (row[n] && n.indexOf('Display') < 0 && n != 'actions')
 				s += '<label>' + n + '</label><value>' + row[n] + '</value><br/>';
 		}
 		if (row.verified == 0)
@@ -172,6 +172,11 @@ class doc {
 	static toggleSelect(id) {
 		var e = $('#' + id).parents('tr').children('td').first();
 		e.html(e.text() ? '' : '<selection>⚫</selection>');
+		var s = '';
+		var selection = $('selection').parents('tr');
+		for (var i = 0; i < selection.length; i++)
+			s += ', ' + selection[i].childNodes[2].firstChild.innerText;
+		$('users').text(s.substring(2));
 	}
 	static getComparator() {
 		var search = $('input#search').val();

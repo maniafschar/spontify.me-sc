@@ -25,19 +25,18 @@
     </div>
     <buttons>
         <button onclick="charts.toggle()">Charts</button>
-        <button onclick="api.chatTestrun(event)">Chat</button>
         <button onclick="doc.toggleNotification(event)">Nachricht</button>
         <button onclick="api.feedback()">Feedback</button>
         <button onclick="doc.toggleLog()">Log</button>
     </buttons>
-    <login>
+    <login style="display:none;">
         <input />
         <input type="password" />
-        <button onclick="api.init()">Einloggen</button>
+        <button onclick="api.init(event)">Einloggen</button>
     </login>
     <notification style="display:none;">
+        <users></users>
         <textarea placeholder="Text"></textarea>
-        <input placeholder="Action" />
         <button onclick="api.notification()">Senden</button>
     </notification>
     <table id="contacts" class="display">
