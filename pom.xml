@@ -9,10 +9,10 @@
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jq</groupId>
-	<artifactId>findapp-sc</artifactId>
+	<artifactId>spontifyme-sc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>findapp SC</name>
+	<name>spontify.me SC</name>
 	<description></description>
 
 	<properties>

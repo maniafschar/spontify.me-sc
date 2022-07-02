@@ -4,7 +4,7 @@ import { start } from "./start";
 export { api }
 
 class api {
-    static url = 'https://findapp.online/rest/support/';
+    static url = 'https://spontify.me/rest/support/';
 
     static chatTestrun() {
         $.ajax({
