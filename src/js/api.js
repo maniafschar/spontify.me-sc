@@ -6,20 +6,6 @@ export { api }
 class api {
     static url = 'https://spontify.me/rest/support/';
 
-    static chatTestrun() {
-        $.ajax({
-            url: api.url + 'chat/13130/testrun',
-            type: 'GET',
-            success() {
-                if (confirm(this.responseText)) {
-                    $.ajax({
-                        url: '/rest/chat/13130',
-                        type: 'POST'
-                    });
-                }
-            }
-        });
-    }
     static convert(fields, values) {
         var o = {};
         for (var i = 0; i < fields.length; i++) {
