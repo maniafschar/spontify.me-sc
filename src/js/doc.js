@@ -146,11 +146,9 @@ class doc {
 			if (row[n] && n.indexOf('Display') < 0 && n != 'actions')
 				s += '<label>' + n + '</label><value>' + row[n] + '</value><br/>';
 		}
-		if (row.verified == 0)
-			s += '<buttons>'
-				+ '<button onclick="api.resendRegistrationEmail(' + row.id + ')">Reg.-Email senden</button>'
-				+ '<button onclick="api.delete(' + row.id + ')">L&ouml;schen</button>'
-				+ '</buttons>';
+		s += '<buttons>'
+			+ '<button onclick="api.delete(' + row.id + ')">L&ouml;schen</button>'
+			+ '</buttons>';
 		return '<entry>' + s + '</entry>';
 	}
 	static search() {
@@ -165,8 +163,8 @@ class doc {
 		$('#search').val(label == $('#search').val() ? '' : label);
 		doc.search();
 	}
-	static toggleNotification(event) {
-		var e = $('notification');
+	static toggleChat() {
+		var e = $('chat');
 		e.css('display', e.css('display') == 'block' ? 'none' : 'block');
 	}
 	static toggleSelect(id) {

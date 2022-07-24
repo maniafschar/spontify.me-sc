@@ -75,40 +75,23 @@ class api {
             }
         });
     }
-    static notification() {
+    static chat() {
         var id = $('selection').parents('tr').children('td:nth-child(2)').map(function () {
             return $(this).text();
         }).get();
-        if (id.length == 0 || !$('notification textarea').val())
+        if (id.length == 0 || !$('chat textarea').val())
             return;
         $.ajax({
-            url: api.url + 'notify',
+            url: api.url + 'chat',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
                 ids: id,
-                text: $('notification textarea').val()
+                text: $('chat textarea').val()
             }),
             success(r) {
-                $('notification').css('display', 'none');
+                $('chat').css('display', 'none');
             }
         });
-    }
-    static resendRegistrationEmail(id) {
-        var highlight = $('#' + id).parents('tr');
-        highlight.css('background', 'yellow');
-        setTimeout(function () {
-            if (!confirm('Möchtest Du die Registrierungsemail erneut senden?')) {
-                highlight.css('background', '');
-                return;
-            }
-            $.ajax({
-                url: api.url + id + '/resend/regmail',
-                type: 'POST',
-                success(r) {
-                    highlight.css('background', '');
-                }
-            });
-        }, 50);
     }
 }

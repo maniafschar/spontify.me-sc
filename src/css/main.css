@@ -88,7 +88,7 @@ entry buttons {
 }
 
 login,
-notification {
+chat {
     position: fixed;
     width: 20em;
     background: rgba(230, 230, 230, 0.95);
@@ -102,12 +102,12 @@ notification {
 }
 
 login input,
-notification input {
+chat input {
     width: 100%;
     margin-bottom: 1em;
 }
 
-notification textarea {
+chat textarea {
     width: 100%;
     height: 10em;
     margin-bottom: 1em;
