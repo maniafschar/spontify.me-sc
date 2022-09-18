@@ -26,6 +26,7 @@ class api {
                 url: api.url + 'user/' + id,
                 type: 'DELETE',
                 success() {
+                    highlight[0].nextSibling.remove();
                     highlight.remove();
                 }
             });
@@ -47,13 +48,60 @@ class api {
     }
     static log() {
         $.ajax({
-            url: api.url + 'log?search=' + encodeURIComponent(doc.logSearch),
-            type: 'GET',
+            url: api.url + 'log/search',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(doc.logSearches),
             success(r) {
-                doc.log(r);
+                var search = doc.logSearches[0], d = new Date(), i;
+                search = search.replace('{date}', d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
+                while ((i = search.indexOf('{date')) > -1) {
+                    var days = search.substring(i + 6, search.indexOf('}'));
+                    var d2 = new Date();
+                    d2.setDate(d.getDate() - days);
+                    search = search.replace('{date-' + days + '}', d2.getFullYear() + '-' + (d2.getMonth() + 1) + '-' + d2.getDate());
+                }
+                $.ajax({
+                    url: api.url + 'log?search=' + encodeURIComponent(search),
+                    type: 'GET',
+                    error(r) {
+                        alert(r.responseText);
+                    },
+                    success(r) {
+                        doc.log(r);
+                        var e = $('input.log_search');
+                        if (!e.val())
+                            e.val(search);
+                        $('.log_searchInputHelper').css('display', 'none');
+                    }
+                });
+            }
+        });
+    }
+    static logSearches() {
+        $.ajax({
+            url: api.url + 'log/search',
+            type: 'GET',
+            dataType: 'JSON',
+            success(r) {
+                doc.logSearches = r;
+                doc.log([]);
                 $('input.log_search').focus();
             }
         });
+    }
+    static resend(id) {
+        var highlight = $('#' + id).parents('tr');
+        highlight.css('background', 'yellow');
+        setTimeout(function () {
+            $.ajax({
+                url: api.url + 'resend/' + id,
+                type: 'PUT',
+                success(r) {
+                    highlight.css('background', '');
+                }
+            });
+        }, 50);
     }
     static init(event) {
         if ($('login input')[0].value) {

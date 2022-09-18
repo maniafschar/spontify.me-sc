@@ -179,6 +179,16 @@ table img {
     display: none;
 }
 
+#log_wrapper .dataTables_info {
+    display: inline-block;
+    position: absolute;
+    top: 1.5em;
+    left: 61em;
+    padding: 0 !important;
+    margin: 0;
+    font-size: 0.7em;
+}
+
 .dataTables_filter {
     margin-right: 1em;
 }
@@ -266,8 +276,8 @@ charts td {
     left: 5%;
     padding: 1em 0;
     border-radius: 1em;
-    box-shadow: 0 0 2em rgb(0 0 0 / 50%);
-    max-height: 85vh;
+    box-shadow: 0 0 2em rgba(0, 0, 0, 0.5);
+    height: 85vh;
     position: fixed;
     overflow-y: auto;
 }
@@ -277,6 +287,22 @@ charts td {
     top: 1em;
     position: absolute;
     width: 50em;
+}
+
+.log_searchInputHelper {
+    background: white;
+    position: absolute;
+    top: 3em;
+    padding-right: 1em;
+    text-align: left;
+    left: 1em;
+    border-radius: 1em;
+    box-shadow: 0 0 2em rgba(0, 0, 0, 0.5);
+}
+
+.log_searchInputHelper li {
+    cursor: pointer;
+    padding: 0.25em 0;
 }
 
 entry label {
