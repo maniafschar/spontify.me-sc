@@ -72,7 +72,7 @@ class api {
                         var e = $('input.log_search');
                         if (!e.val())
                             e.val(search);
-                        $('.log_searchInputHelper').css('display', 'none');
+                        doc.logCloseSearch();
                     }
                 });
             }

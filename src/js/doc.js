@@ -147,12 +147,16 @@ class doc {
 			var e3 = document.createElement('input');
 			e3.setAttribute('class', 'log_search');
 			e3.setAttribute('onkeyup', 'doc.listLog(event)');
+			e3.setAttribute('onblur', 'doc.logCloseSearch()');
 			$('#log_wrapper')[0].insertBefore(e3, null);
 			e3 = document.createElement('div');
 			e3.setAttribute('class', 'log_searchInputHelper');
 			$('#log_wrapper')[0].insertBefore(e3, null);
 			$('.log_search').on('focus', doc.showLogInputHelper);
 		}
+	}
+	static logCloseSearch() {
+		setTimeout(function () { $('.log_searchInputHelper').css('display', 'none'); }, 200);
 	}
 	static logSearch(i) {
 		doc.logSearches.unshift(doc.logSearches.splice(i, 1)[0]);
