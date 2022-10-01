@@ -20,9 +20,9 @@ class start {
             if (start.data[i].verified)
                 verified++;
         }
-        var s = '<label onclick="doc.searchLabel(&quot;verifiziert&quot;)">' + verified + ' verifiziert</label> · ';
-        s += '<label onclick="doc.searchLabel(&quot;ausstehend&quot;)">' + (start.data.length - verified) + ' ausstehend</label> · ';
-        s += '<label onclick="doc.searchLabel(&quot;&quot;)">' + start.data.length + ' total</label>';
+        var s = '<label onclick="doc.filterLabel(&quot;verifiziert&quot;)">' + verified + ' verifiziert</label> · ';
+        s += '<label onclick="doc.filterLabel(&quot;ausstehend&quot;)">' + (start.data.length - verified) + ' ausstehend</label> · ';
+        s += '<label onclick="doc.filterLabel(&quot;&quot;)">' + start.data.length + ' total</label>';
         $('.statistics regs').html(s);
     }
     static getDisplayDate(time) {
@@ -41,6 +41,9 @@ class start {
     }
     static getDisplayPseudonym(data) {
         return '<span onclick="doc.toggleSelect(' + data.id + ')" id="' + data.id + '">' + data.pseudonym + '</span>';
+    }
+    static getDisplayIp(ip) {
+        return '<a href="https://whatismyipaddress.com/ip/' + ip + '" target="sc_uri">' + ip + '</a>';
     }
     static init() {
         $('login').remove();
@@ -96,18 +99,18 @@ class start {
             var tot = data.length;
             $('filtered').text(fil == tot ? '' : ' ' + fil + '/' + tot);
         });
-        $('input#search').val('');
-        $('input#search').on('keyup', doc.search);
+        $('input#filter').val('');
+        $('input#filter').on('keyup', doc.filter);
         $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
                 var comparator = doc.getComparator();
                 if (!comparator)
                     return true;
-                var search = $('input#search').val();
+                var filter = $('input#filter').val();
                 var value = parseFloat(data[data.length - 2].replace(/[A-Z]/ig, ''));
-                if (!isNaN(value) && (search.charAt(0) == '>' && value > comparator ||
-                    search.charAt(0) == '<' && value < comparator ||
-                    search.charAt(0) == '=' && parseInt(value) == parseInt(comparator))) {
+                if (!isNaN(value) && (filter.charAt(0) == '>' && value > comparator ||
+                    filter.charAt(0) == '<' && value < comparator ||
+                    filter.charAt(0) == '=' && parseInt(value) == parseInt(comparator))) {
                     return true;
                 }
                 return false;
@@ -133,7 +136,7 @@ class start {
                 if (p) {
                     $('drillDownTitle').text($('#chartDataType option:selected').text()
                         + ', ' + charts.chart.data.labels[p._index]);
-                    $('input#search').val('');
+                    $('input#filter').val('');
                     charts.filter = $('#chartDataType option:selected').val() + ':' + charts.chart.data.labels[p._index];
                     $('#contacts').DataTable().draw();
                     $('charts').css('margin-top', '-20%');

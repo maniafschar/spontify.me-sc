@@ -21,12 +21,12 @@
     <div class="filter">
         <drillDownTitle></drillDownTitle>
         <filtered></filtered>
-        <input id="search" />
+        <input id="filter" />
     </div>
     <buttons>
         <button onclick="charts.toggle()">Charts</button>
         <button onclick="doc.toggleChat(event)">Chat</button>
-        <button onclick="api.feedback()">Feedback</button>
+        <button onclick="api.ticket()">Ticket</button>
         <button onclick="doc.toggleLog()">Log</button>
     </buttons>
     <login style="display:none;">
@@ -65,55 +65,9 @@
             </tr>
         </tfoot>
     </table>
-    <table id="feedback" class="display" style="display:none;">
-        <thead>
-            <tr>
-                <th></th>
-                <th>ID</th>
-                <th>Erstellt am</th>
-                <th>Name</th>
-                <th>Version</th>
-                <th>Gerät</th>
-                <th>Sprache</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <th></th>
-                <th>ID</th>
-                <th>Erstellt am</th>
-                <th>Name</th>
-                <th>Version</th>
-                <th>Gerät</th>
-                <th>Sprache</th>
-                <th>Status</th>
-            </tr>
-        </tfoot>
+    <table id="ticket" class="display" style="display:none;">
     </table>
     <table id="log" class="display" style="display:none;">
-        <thead>
-            <tr>
-                <th></th>
-                <th>createdAt</th>
-                <th>method</th>
-                <th>uri</th>
-                <th>contactId</th>
-                <th>time</th>
-                <th>status</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <th></th>
-                <th>createdAt</th>
-                <th>method</th>
-                <th>uri</th>
-                <th>contactId</th>
-                <th>time</th>
-                <th>status</th>
-            </tr>
-        </tfoot>
     </table>
     <charts style="transform:scale(0);">
         <table>

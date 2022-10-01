@@ -32,17 +32,17 @@ class api {
             });
         }, 50);
     }
-    static feedback() {
-        var e = $('#feedback_wrapper');
+    static ticket() {
+        var e = $('#ticket_wrapper');
         if (e.length && e.css('display') != 'none') {
             e.css('display', 'none');
             return;
         }
         $.ajax({
-            url: api.url + 'feedback',
+            url: api.url + 'ticket',
             type: 'GET',
             success(r) {
-                doc.feedback(r);
+                doc.ticket(r);
             }
         });
     }
@@ -53,32 +53,20 @@ class api {
             contentType: 'application/json',
             data: JSON.stringify(doc.logSearches),
             success(r) {
-                var search = doc.logSearches[0], d = new Date(), i;
-                search = search.replace('{date}', d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
-                while ((i = search.indexOf('{date')) > -1) {
-                    var days = search.substring(i + 6, search.indexOf('}'));
-                    var d2 = new Date();
-                    d2.setDate(d.getDate() - days);
-                    search = search.replace('{date-' + days + '}', d2.getFullYear() + '-' + (d2.getMonth() + 1) + '-' + d2.getDate());
-                }
                 $.ajax({
-                    url: api.url + 'log?search=' + encodeURIComponent(search),
+                    url: api.url + 'log?search=' + encodeURIComponent($('input.log_search').val()),
                     type: 'GET',
                     error(r) {
                         alert(r.responseText);
                     },
                     success(r) {
                         doc.log(r);
-                        var e = $('input.log_search');
-                        if (!e.val())
-                            e.val(search);
-                        doc.logCloseSearch();
                     }
                 });
             }
         });
     }
-    static logSearches() {
+    static logInit() {
         $.ajax({
             url: api.url + 'log/search',
             type: 'GET',
