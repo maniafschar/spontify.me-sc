@@ -38,11 +38,23 @@ class api {
             e.css('display', 'none');
             return;
         }
+        e = $('#log_wrapper');
+        if (e.css('display') != 'none')
+            e.css('display', 'none');
         $.ajax({
             url: api.url + 'ticket',
             type: 'GET',
             success(r) {
                 doc.ticket(r);
+            }
+        });
+    }
+    static ticketDelete(id, event) {
+        $.ajax({
+            url: api.url + 'ticket/' + id,
+            type: 'DELETE',
+            success(r) {
+                doc.ticketDelete(event);
             }
         });
     }

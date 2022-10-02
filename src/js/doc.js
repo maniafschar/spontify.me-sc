@@ -10,10 +10,12 @@ class doc {
 	static logSearches = null;
 
 	static ticket(r) {
-		var data = [];
+		var data = [], types = {};
 		for (var i = 1; i < r.length; i++) {
 			data.push(api.convert(r[0], r[i]));
 			data[i - 1].createdAt = start.getDisplayDate(data[i - 1].createdAt);
+			if (!types[data[i - 1].type])
+				types[data[i - 1].type] = 1;
 		}
 		// prepare table
 		if (doc.ticketTable)
@@ -51,11 +53,20 @@ class doc {
 				tr.addClass('shown');
 			}
 		});
-		doc.ticketTable.on('draw.dt', function () {
-			var fil = $('#ticket tbody>tr').length;
-			var tot = data.length;
-			$('filtered').text(fil == tot ? '' : ' ' + fil + '/' + tot);
-		});
+		var e3 = document.createElement('ticketFilterButtons');
+		for (var n in types)
+			e3.innerHTML = e3.innerHTML + '<button onclick="doc.ticketFilter(&quot;' + n + '&quot;)">' + n + '</button>';
+		$('#ticket_wrapper')[0].insertBefore(e3, null);
+	}
+	static ticketDelete(event) {
+		var row = $(event.target).parents('tr');
+		row[0].previousSibling.remove();
+		row.remove();
+	}
+	static ticketFilter(label) {
+		var e = $('#ticket_wrapper input[type="search"]');
+		e.val(label == e.val() ? '' : label);
+		$('#ticket').DataTable().search(e.val()).draw();
 	}
 	static listLog(event) {
 		if (event.keyCode == 13) {
@@ -79,10 +90,9 @@ class doc {
 					break;
 				}
 			}
-			doc.logSearches.sort(function (e1, e2) { return e2.i - e1.i })
 			if (!found && s.indexOf(' ') > 0) {
-				if (doc.logSearches.length > 9)
-					doc.logSearches.splice(9, doc.logSearches.length);
+				if (doc.logSearches.length > 4)
+					doc.logSearches.splice(4, doc.logSearches.length);
 				doc.logSearches.push({ i: 1, s: s });
 			}
 			api.log();
@@ -94,6 +104,9 @@ class doc {
 			e.css('display', 'none');
 			return;
 		}
+		e = $('#ticket_wrapper');
+		if (e.css('display') != 'none')
+			e.css('display', 'none');
 		if (doc.logSearches == null)
 			api.logInit();
 		else
@@ -149,6 +162,7 @@ class doc {
 		addColumn('time', 10);
 		addColumn('status', 10);
 		addColumn('ip', 10);
+		addColumn('city', 10);
 		addColumn('referer', 15);
 		addColumn('query', 15);
 		doc.logTable = $('#log').DataTable(config);
@@ -164,11 +178,6 @@ class doc {
 				tr.addClass('shown');
 			}
 		});
-		doc.logTable.on('draw.dt', function () {
-			var fil = $('#log tbody>tr').length;
-			var tot = data.length;
-			$('filtered').text(fil == tot ? '' : ' ' + fil + '/' + tot);
-		});
 		if (!$('input.log_search').length) {
 			var e3 = document.createElement('input');
 			e3.setAttribute('class', 'log_search');
@@ -182,10 +191,10 @@ class doc {
 			$('.log_search').val(search);
 		}
 	}
-	static logCloseSearch(event, search) {
-		if (search) {
+	static logCloseSearch(event, searchIndex) {
+		if (typeof searchIndex == 'number') {
 			var d = new Date(), i;
-			search = search.replace('{date}', d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
+			var search = doc.logSearches[searchIndex].s.replace('{date}', d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
 			while ((i = search.indexOf('{date')) > -1) {
 				var days = search.substring(i + 6, search.indexOf('}'));
 				var d2 = new Date();
@@ -193,15 +202,17 @@ class doc {
 				search = search.replace('{date-' + days + '}', d2.getFullYear() + '-' + (d2.getMonth() + 1) + '-' + d2.getDate());
 			}
 			$('input.log_search').val(search);
-			if (!event.shiftKey)
+			if (!event.shiftKey) {
+				doc.logSearches[searchIndex].i++;
 				api.log();
+			}
 		}
 		setTimeout(function () {
 			$('.log_searchInputHelper').css('display', 'none');
 		}, 500);
 	}
 	static logSearch(event, i) {
-		doc.logCloseSearch(event, doc.logSearches[i].s);
+		doc.logCloseSearch(event, i);
 		setTimeout(() => {
 			$('input.log_search').focus();
 		}, 50);
@@ -210,6 +221,7 @@ class doc {
 		document.getElementsByTagName(tag)[0].style.display = 'none';
 	}
 	static showLogInputHelper() {
+		doc.logSearches.sort(function (e1, e2) { return e2.i - e1.i });
 		var s = '';
 		for (var i = 0; i < doc.logSearches.length; i++)
 			s += '<li onclick="doc.logSearch(event, ' + i + ')">' + doc.logSearches[i].s + '<span>' + doc.logSearches[i].i + '</span></li>';
@@ -227,6 +239,8 @@ class doc {
 			s += '<buttons><button onclick="api.delete(' + row.id + ')">L&ouml;schen</button>'
 				+ (row.verified ? '' : '<button onclick="api.resend(' + row.id + ')">Email wieder senden</button>')
 				+ '</buttons>';
+		if (row.type == 'ERROR')
+			s += '<buttons><button onclick="api.ticketDelete(' + row.id + ',event)">L&ouml;schen</button></buttons>';
 		return '<entry>' + s + '</entry>';
 	}
 	static filter() {

@@ -33,6 +33,7 @@ button {
     padding: 0.5em 1em;
     border-radius: 1em;
     outline: none;
+    cursor: pointer;
 }
 
 h1 {
@@ -180,22 +181,19 @@ table img {
     background: rgb(240, 240, 240);
 }
 
-.dataTables_info {
-    display: none;
-}
-
-#log_wrapper .dataTables_info {
+#log_wrapper .dataTables_info,
+#ticket_wrapper .dataTables_info {
     display: inline-block;
     position: absolute;
-    top: 1.5em;
-    left: 61em;
+    top: 3.8em;
+    left: 1em;
     padding: 0 !important;
     margin: 0;
     font-size: 0.7em;
 }
 
 .dataTables_filter {
-    margin-right: 1em;
+    margin: 1.5em 1em 0 0;
 }
 
 label {
@@ -283,11 +281,27 @@ charts td {
     overflow-y: auto;
 }
 
+ticketFilterButtons {
+    position: absolute;
+    right: 1em;
+    top: 0.5em;
+}
+
+ticketFilterButtons button {
+    padding: 0.25em 0.5em;
+}
+
+ticketActionButtons {
+    position: absolute;
+    left: 0.5em;
+    top: 0.5em;
+}
+
 .log_search {
     left: 1em;
     top: 1em;
     position: absolute;
-    width: 50em;
+    right: 1em;
 }
 
 .log_searchInputHelper {
