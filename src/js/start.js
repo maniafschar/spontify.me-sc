@@ -55,6 +55,7 @@ class start {
         for (var i = data.length - 1; i >= 0; i--) {
             data[i].createdAt = start.getDisplayDate(data[i].createdAt);
             data[i].modifiedAt = start.getDisplayDate(data[i].modifiedAt);
+            data[i].lastLogin = start.getDisplayDate(data[i].lastLogin);
             data[i].statusDisplay = start.getDisplayStatus(data[i]);
             data[i].pseudonymDisplay = start.getDisplayPseudonym(data[i]);
         }
@@ -74,10 +75,11 @@ class start {
                 { 'data': 'id', 'width': '5%' },
                 { 'data': 'pseudonymDisplay', 'width': '15%' },
                 { 'data': 'createdAt', 'width': '10%' },
-                { 'data': 'modifiedAt', 'width': '10%', 'defaultContent': '' },
+                { 'data': 'lastLogin', 'width': '10%', 'defaultContent': '' },
                 { 'data': 'os', 'width': '10%' },
+                { 'data': 'version', 'width': '10%' },
                 { 'data': 'language', 'width': '10%' },
-                { 'data': 'statusDisplay', 'width': '20%' }
+                { 'data': 'statusDisplay', 'width': '10%' }
             ],
             'paging': false,
             'order': [[0, 'desc']]
