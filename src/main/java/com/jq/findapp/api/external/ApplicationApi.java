@@ -27,8 +27,8 @@ public class ApplicationApi {
 	@Autowired
 	private JavaMailSender email;
 
-	public void refreshDB() {
-		WebClient.create(apiBaseUrl + "refreshDB").put()
+	public void scheduler() {
+		WebClient.create(apiBaseUrl + "scheduler").put()
 				.header("secret", schedulerSecret).retrieve().toEntity(Void.class).block();
 	}
 

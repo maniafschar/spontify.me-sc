@@ -107,6 +107,7 @@ class api {
         if ($('login input')[0].value) {
             start.user = $('login input')[0].value;
             start.password = $('login input')[1].value;
+            start.secret = $('login input')[2].value;
         }
         $.ajax({
             url: api.url + 'user',
@@ -116,7 +117,7 @@ class api {
                 for (var i = 1; i < r.length; i++)
                     start.data.push(api.convert(r[0], r[i]));
                 if (event === true || event && event.shiftKey)
-                    window.localStorage.setItem('credentials', start.user + '\u0015' + start.password);
+                    window.localStorage.setItem('credentials', start.user + '\u0015' + start.password + '\u0015' + start.secret);
                 else
                     window.localStorage.removeItem('credentials');
                 start.init();

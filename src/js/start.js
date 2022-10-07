@@ -7,10 +7,12 @@ export { start };
 class start {
     static data = [];
     static password;
+    static secret;
     static user;
 
     static beforeServerCall(xhr) {
         var salt = ('' + new Date().getTime() + Math.random()).replace(/[01]\./, '.');
+        xhr.setRequestHeader('secret', start.secret);
         xhr.setRequestHeader('salt', salt);
         xhr.setRequestHeader('password', sha256.hash(start.password + salt + start.user));
     }
@@ -163,6 +165,7 @@ $(function () {
     });
     if (window.localStorage.getItem('credentials')) {
         start.user = window.localStorage.getItem('credentials').split('\u0015');
+        start.secret = start.user[2];
         start.password = start.user[1];
         start.user = start.user[0];
         api.init(true);

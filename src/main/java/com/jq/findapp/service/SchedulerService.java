@@ -12,8 +12,8 @@ public class SchedulerService {
 	private ApplicationApi applicationApi;
 
 	@Scheduled(cron = "0 0 * * * *")
-	public void refreshAge() throws Exception {
-		applicationApi.refreshDB();
+	public void scheduler() throws Exception {
+		applicationApi.scheduler();
 	}
 
 	@Scheduled(cron = "0 * * * * *")
