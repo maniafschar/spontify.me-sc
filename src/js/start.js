@@ -159,8 +159,7 @@ $(function () {
         timeout: 60000,
         beforeSend: start.beforeServerCall,
         error: function (e) {
-            window.localStorage.removeItem('credentials');
-            window.location.reload();
+            alert(e.responseText);
         }
     });
     if (window.localStorage.getItem('credentials')) {
