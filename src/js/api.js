@@ -60,21 +60,13 @@ class api {
     }
     static log() {
         $.ajax({
-            url: api.url + 'log/search',
-            type: 'PUT',
-            contentType: 'application/json',
-            data: JSON.stringify(doc.logSearches),
+            url: api.url + 'log?search=' + encodeURIComponent($('input.log_search').val()),
+            type: 'GET',
+            error(r) {
+                alert(r.responseText);
+            },
             success(r) {
-                $.ajax({
-                    url: api.url + 'log?search=' + encodeURIComponent($('input.log_search').val()),
-                    type: 'GET',
-                    error(r) {
-                        alert(r.responseText);
-                    },
-                    success(r) {
-                        doc.log(r);
-                    }
-                });
+                doc.log(r);
             }
         });
     }

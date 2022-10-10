@@ -184,50 +184,35 @@ class doc {
 			e3.setAttribute('onkeyup', 'doc.listLog(event)');
 			e3.setAttribute('onblur', 'doc.logCloseSearch()');
 			$('#log_wrapper')[0].insertBefore(e3, null);
-			e3 = document.createElement('div');
-			e3.setAttribute('class', 'log_searchInputHelper');
-			$('#log_wrapper')[0].insertBefore(e3, null);
-			$('.log_search').on('focus', doc.showLogInputHelper);
+			e3 = document.createElement('span');
+			e3.setAttribute('class', 'log_buttons');
+			var s = '', sqls = [
+				{ label: 'log', sql: 'log.createdAt>\'{date-1}\' and log.uri not like \'/support/%\'' },
+				{ label: 'support', sql: 'log.createdAt>\'{date-1}\' and log.uri like \'/support/%\'' },
+				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri=\'ad\'' }
+			];
+			for (var i = 0; i < sqls.length; i++)
+				s += '<button class="bgColor" onclick="doc.logSearch(event,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button></span>';
+			e3.innerHTML = s;
+			$('#log_wrapper')[0].insertBefore(e3, $('#log')[0]);
 			$('.log_search').val(search);
 		}
 	}
-	static logCloseSearch(event, searchIndex) {
-		if (typeof searchIndex == 'number') {
-			var d = new Date(), i;
-			var search = doc.logSearches[searchIndex].s.replace('{date}', d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
-			while ((i = search.indexOf('{date')) > -1) {
-				var days = search.substring(i + 6, search.indexOf('}'));
-				var d2 = new Date();
-				d2.setDate(d.getDate() - days);
-				search = search.replace('{date-' + days + '}', d2.getFullYear() + '-' + (d2.getMonth() + 1) + '-' + d2.getDate());
-			}
-			$('input.log_search').val(search);
-			if (!event.shiftKey) {
-				doc.logSearches[searchIndex].i++;
-				api.log();
-			}
+	static logSearch(event, sql) {
+		var d = new Date(), i;
+		var search = sql.replace('{date}', d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
+		while ((i = search.indexOf('{date')) > -1) {
+			var days = search.substring(i + 6, search.indexOf('}'));
+			var d2 = new Date();
+			d2.setDate(d.getDate() - days);
+			search = search.replace('{date-' + days + '}', d2.getFullYear() + '-' + (d2.getMonth() + 1) + '-' + d2.getDate());
 		}
-		setTimeout(function () {
-			$('.log_searchInputHelper').css('display', 'none');
-		}, 500);
-	}
-	static logSearch(event, i) {
-		doc.logCloseSearch(event, i);
-		setTimeout(() => {
-			$('input.log_search').focus();
-		}, 50);
+		$('input.log_search').val(search);
+		if (!event.shiftKey)
+			api.log();
 	}
 	static closePopup(tag) {
 		document.getElementsByTagName(tag)[0].style.display = 'none';
-	}
-	static showLogInputHelper() {
-		doc.logSearches.sort(function (e1, e2) { return e2.i - e1.i });
-		var s = '';
-		for (var i = 0; i < doc.logSearches.length; i++)
-			s += '<li onclick="doc.logSearch(event, ' + i + ')">' + doc.logSearches[i].s + '<span>' + doc.logSearches[i].i + '</span></li>';
-		var e = $('.log_searchInputHelper');
-		e.html('<ul>' + s + '</ul>');
-		e.css('display', 'inline-block');
 	}
 	static showDetails(row) {
 		var s = '';

@@ -45,7 +45,7 @@ class start {
         return '<span onclick="doc.toggleSelect(' + data.id + ')" id="' + data.id + '">' + data.pseudonym + '</span>';
     }
     static getDisplayIp(ip) {
-        return '<a href="https://whatismyipaddress.com/ip/' + ip + '" target="sc_ip">' + ip + '</a>';
+        return ip ? '<a href="https://whatismyipaddress.com/ip/' + ip + '" target="sc_ip">' + ip + '</a>' : '';
     }
     static init() {
         $('login').remove();
