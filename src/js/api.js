@@ -1,4 +1,4 @@
-import { doc } from "./doc";
+import { lists } from "./lists";
 import { start } from "./start";
 
 export { api }
@@ -32,41 +32,26 @@ class api {
             });
         }, 50);
     }
-    static ticket() {
-        var e = $('#ticket_wrapper');
-        if (e.length && e.css('display') != 'none') {
-            e.css('display', 'none');
-            return;
-        }
-        e = $('#log_wrapper');
-        if (e.css('display') != 'none')
-            e.css('display', 'none');
-        $.ajax({
-            url: api.url + 'ticket',
-            type: 'GET',
-            success(r) {
-                doc.ticket(r);
-            }
-        });
-    }
     static ticketDelete(id, event) {
         $.ajax({
             url: api.url + 'ticket/' + id,
             type: 'DELETE',
             success(r) {
-                doc.ticketDelete(event);
+                var row = $(event.target).parents('tr');
+                row[0].previousSibling.remove();
+                row.remove();
             }
         });
     }
-    static log() {
+    static list(id) {
         $.ajax({
-            url: api.url + 'log?search=' + encodeURIComponent($('input.log_search').val()),
+            url: api.url + id + '?search=' + encodeURIComponent($('input.' + id + '_search').val()),
             type: 'GET',
             error(r) {
                 alert(r.responseText);
             },
             success(r) {
-                doc.log(r);
+                lists.data(id, r);
             }
         });
     }

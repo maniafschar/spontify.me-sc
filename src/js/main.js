@@ -3,6 +3,7 @@ import { start } from './start';
 import { calendar } from './calendar';
 import { charts } from './charts';
 import { doc } from './doc';
+import { lists } from './lists';
 import dt from 'datatables.net';
 import Chart from 'chart.js/auto';
 
@@ -11,6 +12,7 @@ global.$.DataTable = dt;
 window.Chart = Chart;
 window.api = api;
 window.doc = doc;
+window.lists = lists;
 window.start = start;
 window.calendar = calendar;
 window.charts = charts;

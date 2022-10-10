@@ -281,36 +281,20 @@ charts td {
     overflow-y: auto;
 }
 
-ticketFilterButtons {
-    position: absolute;
-    right: 1em;
-    top: 0.5em;
-}
-
-ticketFilterButtons button {
-    padding: 0.25em 0.5em;
-}
-
-ticketActionButtons {
-    position: absolute;
-    left: 0.5em;
-    top: 0.5em;
-}
-
-.log_search {
+.dataTables_wrapper>input {
     left: 1em;
     top: 1em;
     position: absolute;
     right: 1em;
 }
 
-.log_buttons {
-    margin: 1.3em 1em 0 0;
+.dataTables_wrapper .buttons {
+    margin-top: 1.3em;
     position: relative;
     float: right;
 }
 
-.log_buttons button {
+.dataTables_wrapper .buttons button {
     padding: 0.25em 0.75em;
 }
 
