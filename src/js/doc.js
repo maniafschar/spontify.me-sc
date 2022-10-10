@@ -7,7 +7,6 @@ export { doc }
 class doc {
 	static ticketTable = null;
 	static logTable = null;
-	static logSearches = null;
 
 	static ticket(r) {
 		var data = [], types = {};
@@ -82,19 +81,6 @@ class doc {
 					s = s.replace(d2.getFullYear() + '-' + (d2.getMonth() + 1) + '-' + d2.getDate(), '{date' + Math.floor((d2 - d) / (1000 * 60 * 60 * 24)) + '}');
 				}
 			}
-			var found = false;
-			for (i = 0; i < doc.logSearches.length; i++) {
-				if (doc.logSearches[i].s == s) {
-					doc.logSearches[i].i++;
-					found = true;
-					break;
-				}
-			}
-			if (!found && s.indexOf(' ') > 0) {
-				if (doc.logSearches.length > 4)
-					doc.logSearches.splice(4, doc.logSearches.length);
-				doc.logSearches.push({ i: 1, s: s });
-			}
 			api.log();
 		}
 	}
@@ -107,10 +93,42 @@ class doc {
 		e = $('#ticket_wrapper');
 		if (e.css('display') != 'none')
 			e.css('display', 'none');
-		if (doc.logSearches == null)
-			api.logInit();
-		else
-			$('#log_wrapper').css('display', 'block');
+		if (!$('input.log_search').length) {
+			doc.logTable = $('#log').DataTable({
+				data: null,
+				columns: [
+					{
+						className: 'details-control',
+						orderable: false,
+						data: null,
+						defaultContent: '',
+						width: '5%'
+					}
+				],
+				autoWidth: false,
+				paging: false
+			});
+			doc.logInit();
+		}
+		$('#log_wrapper').css('display', 'block');
+	}
+	static logInit() {
+		var e3 = document.createElement('input');
+		e3.setAttribute('class', 'log_search');
+		e3.setAttribute('onkeyup', 'doc.listLog(event)');
+		e3.setAttribute('onblur', 'doc.logCloseSearch()');
+		$('#log_wrapper')[0].insertBefore(e3, null);
+		e3 = document.createElement('span');
+		e3.setAttribute('class', 'log_buttons');
+		var s = '', sqls = [
+			{ label: 'log', sql: 'log.createdAt>\'{date-1}\' and log.uri not like \'/support/%\'' },
+			{ label: 'support', sql: 'log.createdAt>\'{date-1}\' and log.uri like \'/support/%\'' },
+			{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri=\'ad\'' }
+		];
+		for (var i = 0; i < sqls.length; i++)
+			s += '<button class="bgColor" onclick="doc.logSearch(event,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button></span>';
+		e3.innerHTML = s;
+		$('#log_wrapper')[0].insertBefore(e3, $('#log')[0]);
 	}
 	static log(r) {
 		var data = [], differentValuesInColumn = {};
@@ -143,7 +161,7 @@ class doc {
 					data: null,
 					defaultContent: '',
 					width: '5%'
-				},
+				}
 			],
 			autoWidth: false,
 			paging: false
@@ -178,25 +196,8 @@ class doc {
 				tr.addClass('shown');
 			}
 		});
-		if (!$('input.log_search').length) {
-			var e3 = document.createElement('input');
-			e3.setAttribute('class', 'log_search');
-			e3.setAttribute('onkeyup', 'doc.listLog(event)');
-			e3.setAttribute('onblur', 'doc.logCloseSearch()');
-			$('#log_wrapper')[0].insertBefore(e3, null);
-			e3 = document.createElement('span');
-			e3.setAttribute('class', 'log_buttons');
-			var s = '', sqls = [
-				{ label: 'log', sql: 'log.createdAt>\'{date-1}\' and log.uri not like \'/support/%\'' },
-				{ label: 'support', sql: 'log.createdAt>\'{date-1}\' and log.uri like \'/support/%\'' },
-				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri=\'ad\'' }
-			];
-			for (var i = 0; i < sqls.length; i++)
-				s += '<button class="bgColor" onclick="doc.logSearch(event,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button></span>';
-			e3.innerHTML = s;
-			$('#log_wrapper')[0].insertBefore(e3, $('#log')[0]);
-			$('.log_search').val(search);
-		}
+		doc.logInit();
+		$('.log_search').val(search);
 	}
 	static logSearch(event, sql) {
 		var d = new Date(), i;

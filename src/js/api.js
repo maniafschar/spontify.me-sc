@@ -70,18 +70,6 @@ class api {
             }
         });
     }
-    static logInit() {
-        $.ajax({
-            url: api.url + 'log/search',
-            type: 'GET',
-            dataType: 'JSON',
-            success(r) {
-                doc.logSearches = r;
-                doc.log([]);
-                $('input.log_search').focus();
-            }
-        });
-    }
     static resend(id) {
         var highlight = $('#' + id).parents('tr');
         highlight.css('background', 'yellow');
