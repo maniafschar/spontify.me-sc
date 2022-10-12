@@ -5,55 +5,54 @@ import { start } from "./start";
 export { lists }
 
 class lists {
-	static ticketTable = null;
 	static logTable = null;
 
-	static toggle(id) {
-		var e = $('#' + id + '_wrapper');
+	static toggle() {
+		var e = $('#log_wrapper');
 		if (e.length && e.css('display') != 'none') {
 			e.css('display', 'none');
 			return;
 		}
-		e = $('#' + (id == 'log' ? 'ticket' : 'log') + '_wrapper');
+		e = $('#log_wrapper');
 		if (e.css('display') != 'none')
 			e.css('display', 'none');
-		if (!$('input.' + id + '_search').length) {
-			lists[id + 'Table'] = $('#' + id).DataTable({
+		if (!$('input.log_search').length) {
+			lists.logTable = $('#log').DataTable({
 				data: null,
 				columns: [{}],
 				autoWidth: false,
 				paging: false
 			});
-			lists.init(id);
+			lists.init();
 		}
-		$('#' + id + '_wrapper').css('display', 'block');
+		$('#log_wrapper').css('display', 'block');
 	}
-	static init(id) {
+	static init() {
 		var e = document.createElement('input');
-		e.setAttribute('class', id + '_search');
-		e.setAttribute('onkeyup', 'lists.search(event,"' + id + '")');
-		$('#' + id + '_wrapper')[0].insertBefore(e, null);
+		e.setAttribute('class', 'log_search');
+		e.setAttribute('onkeyup', 'lists.search(event)');
+		$('#log_wrapper')[0].insertBefore(e, null);
 		e = document.createElement('span');
 		e.setAttribute('class', 'buttons');
-		var s = '', sqls = id == 'log' ?
+		var s = '', sqls =
 			[
 				{ label: 'log', sql: 'log.createdAt>\'{date-1}\' and log.uri not like \'/support/%\'' },
 				{ label: 'support', sql: 'log.createdAt>\'{date-1}\' and log.uri like \'/support/%\'' },
-				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri=\'ad\'' }
-			] :
-			[
+				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri=\'ad\'' },
 				{ label: 'error', sql: 'ticket.type=\'ERROR\'' },
 				{ label: 'registration', sql: 'ticket.type=\'REGISTRATION\'' },
+				{ label: 'block', sql: 'ticket.type=\'BLOCK\'' },
 				{ label: 'google', sql: 'ticket.type=\'GOOGLE\'' }
 			];
 		for (var i = 0; i < sqls.length; i++)
-			s += '<button class="bgColor" onclick="lists.search(event,&quot;' + id + '&quot;,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button></span>';
+			s += '<button class="bgColor" onclick="lists.search(event,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button></span>';
 		e.innerHTML = s;
-		$('#' + id + '_wrapper')[0].insertBefore(e, $('#' + id)[0]);
-		e = $('#' + id + '_wrapper .dataTables_filter label')[0];
+		$('#log_wrapper')[0].insertBefore(e, $('#log')[0]);
+		e = $('#log_wrapper .dataTables_filter label')[0];
 		e.innerHTML = e.innerHTML.replace('Search:', '');
+		$('#log_filter input').on('keyup', lists.filter);
 	}
-	static data(id, r) {
+	static data(r) {
 		var data = [], differentValuesInColumn = {};
 		for (var i = 1; i < r.length; i++) {
 			data.push(api.convert(r[0], r[i]));
@@ -66,15 +65,15 @@ class lists {
 			data[i - 1].ip = start.getDisplayIp(data[i - 1].ip);
 		}
 		// prepare table
-		var search = $('.' + id + '_search').val();
-		if (lists[id + 'Table']) {
-			lists[id + 'Table'].destroy();
-			$('#' + id).empty();
+		var search = $('.log_search').val();
+		if (lists.logTable) {
+			lists.logTable.destroy();
+			$('#log').empty();
 		}
-		var e = $('#' + id)[0];
+		var e = $('#log')[0];
 		e.parentNode.replaceChild(e.cloneNode(true), e);
-		$('#' + id).css('display', 'block');
-		$('#' + id + '_wrapper').css('display', 'block');
+		$('#log').css('display', 'block');
+		$('#log_wrapper').css('display', 'block');
 		var config = {
 			data: data,
 			columns: [
@@ -109,10 +108,10 @@ class lists {
 		addColumn('type', 15);
 		addColumn('subject', 25);
 		addColumn('note', 45);
-		lists[id + 'Table'] = $('#' + id).DataTable(config);
-		$('#' + id + ' tbody').on('click', 'td.details-control', function () {
+		lists.logTable = $('#log').DataTable(config);
+		$('#log tbody').on('click', 'td.details-control', function () {
 			var tr = $(this).closest('tr');
-			var row = lists[id + 'Table'].row(tr);
+			var row = lists.logTable.row(tr);
 
 			if (row.child.isShown()) {
 				row.child.hide();
@@ -122,10 +121,13 @@ class lists {
 				tr.addClass('shown');
 			}
 		});
-		lists.init(id);
-		$('.' + id + '_search').val(search);
+		lists.init();
+		$('.log_search').val(search);
 	}
-	static search(event, id, sql) {
+	static filter() {
+		$("#log").DataTable().search($("#log_filter input").val()).draw()
+	}
+	static search(event, sql) {
 		var d = new Date(), i;
 		if (sql) {
 			var search = sql.replace('{date}', d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
@@ -135,9 +137,9 @@ class lists {
 				d2.setDate(d.getDate() - days);
 				search = search.replace('{date-' + days + '}', d2.getFullYear() + '-' + (d2.getMonth() + 1) + '-' + d2.getDate());
 			}
-			$('input.' + id + '_search').val(search);
+			$('input.log_search').val(search);
 		}
 		if (event.keyCode == 13 || sql && !event.shiftKey)
-			api.list(id);
+			api.list();
 	}
 }

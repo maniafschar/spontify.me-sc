@@ -43,15 +43,16 @@ class api {
             }
         });
     }
-    static list(id) {
+    static list() {
+        var sql = $('input.log_search').val();
         $.ajax({
-            url: api.url + id + '?search=' + encodeURIComponent($('input.' + id + '_search').val()),
+            url: api.url + (sql.indexOf('ticket.') > -1 ? 'ticket' : 'log') + '?search=' + encodeURIComponent(sql),
             type: 'GET',
             error(r) {
                 alert(r.responseText);
             },
             success(r) {
-                lists.data(id, r);
+                lists.data(r);
             }
         });
     }
