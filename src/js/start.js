@@ -162,7 +162,10 @@ $(function () {
             alert(e.responseText);
         }
     });
-    if (window.localStorage.getItem('credentials')) {
+    if (window.localStorage.getItem('credentials')
+        && window.localStorage.getItem('credentials').split('\u0015')[0]
+        && window.localStorage.getItem('credentials').split('\u0015')[1]
+        && window.localStorage.getItem('credentials').split('\u0015')[2]) {
         start.user = window.localStorage.getItem('credentials').split('\u0015');
         start.secret = start.user[2];
         start.password = start.user[1];

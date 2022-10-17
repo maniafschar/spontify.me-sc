@@ -82,9 +82,10 @@ class api {
                 start.data = [];
                 for (var i = 1; i < r.length; i++)
                     start.data.push(api.convert(r[0], r[i]));
-                if (event === true || event && event.shiftKey)
-                    window.localStorage.setItem('credentials', start.user + '\u0015' + start.password + '\u0015' + start.secret);
-                else
+                if (event === true || event && event.shiftKey) {
+                    if (start.user && start.password && start.secret)
+                        window.localStorage.setItem('credentials', start.user + '\u0015' + start.password + '\u0015' + start.secret);
+                } else
                     window.localStorage.removeItem('credentials');
                 start.init();
             }
