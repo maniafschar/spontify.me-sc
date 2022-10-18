@@ -92,15 +92,18 @@ class api {
         });
     }
     static chat() {
+        if (!$('chat textarea').val())
+            return;
         var id;
-        if ($('chat input[type="checkbox"]:checked')[0])
+        if ($('chat input.search').val())
             id = [];
-        else
+        else {
             id = $('selection').parents('tr').children('td:nth-child(2)').map(function () {
                 return $(this).text();
             }).get();
-        if (id.length == 0 || !$('chat textarea').val())
-            return;
+            if (id.length == 0)
+                return;
+        }
         $.ajax({
             url: api.url + 'chat',
             type: 'POST',
@@ -108,7 +111,8 @@ class api {
             data: JSON.stringify({
                 ids: id,
                 text: $('chat textarea').val(),
-                action: $('chat input:not([type="checkbox"])').val()
+                search: $('chat input.search').val(),
+                action: $('chat input.action').val()
             }),
             success(r) {
                 $('chat').css('display', 'none');
