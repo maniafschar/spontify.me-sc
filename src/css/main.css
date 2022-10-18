@@ -108,7 +108,7 @@ chat {
 }
 
 login input,
-chat input {
+chat input:not([type="checkbox"]) {
     width: 100%;
     margin-bottom: 1em;
 }

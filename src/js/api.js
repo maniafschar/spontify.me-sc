@@ -92,9 +92,13 @@ class api {
         });
     }
     static chat() {
-        var id = $('selection').parents('tr').children('td:nth-child(2)').map(function () {
-            return $(this).text();
-        }).get();
+        var id;
+        if ($('chat input[type="checkbox"]:checked')[0])
+            id = [];
+        else
+            id = $('selection').parents('tr').children('td:nth-child(2)').map(function () {
+                return $(this).text();
+            }).get();
         if (id.length == 0 || !$('chat textarea').val())
             return;
         $.ajax({
@@ -103,7 +107,8 @@ class api {
             contentType: 'application/json',
             data: JSON.stringify({
                 ids: id,
-                text: $('chat textarea').val()
+                text: $('chat textarea').val(),
+                action: $('chat input:not([type="checkbox"])').val()
             }),
             success(r) {
                 $('chat').css('display', 'none');
