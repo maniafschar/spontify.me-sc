@@ -34,8 +34,8 @@ class doc {
 		$('#filter').val(label == $('#filter').val() ? '' : label);
 		doc.filter();
 	}
-	static toggleChat() {
-		var e = $('chat');
+	static toggleMarketing() {
+		var e = $('marketing');
 		e.css('display', e.css('display') == 'block' ? 'none' : 'block');
 	}
 	static toggleSelect(id) {
