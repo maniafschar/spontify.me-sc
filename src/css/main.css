@@ -96,11 +96,11 @@ entry buttons {
 login,
 marketing {
     position: fixed;
-    width: 20em;
+    width: 40em;
     background: rgba(230, 230, 230, 0.95);
     z-index: 9;
     left: 50%;
-    margin-left: -11em;
+    margin-left: -20em;
     top: 3em;
     padding: 1em;
     border-radius: 1em;
