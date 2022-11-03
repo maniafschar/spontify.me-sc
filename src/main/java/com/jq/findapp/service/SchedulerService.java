@@ -11,7 +11,7 @@ public class SchedulerService {
 	@Autowired
 	private ApplicationApi applicationApi;
 
-	@Scheduled(cron = "0 0 * * * *")
+	@Scheduled(cron = "0 */10 * * * *")
 	public void scheduler() throws Exception {
 		applicationApi.scheduler();
 	}
