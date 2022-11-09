@@ -40,9 +40,10 @@ class lists {
 				{ label: 'support', sql: 'log.createdAt>\'{date-1}\' and log.uri like \'/support/%\'' },
 				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri=\'ad\'' },
 				{ label: 'error', sql: 'ticket.type=\'ERROR\'' },
+				{ label: 'email', sql: 'ticket.type=\'EMAIL\'' },
 				{ label: 'registration', sql: 'ticket.type=\'REGISTRATION\'' },
 				{ label: 'block', sql: 'ticket.type=\'BLOCK\'' },
-				{ label: 'google', sql: 'ticket.type=\'GOOGLE\'' }
+				{ label: 'google', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'GOOGLE\'' }
 			];
 		for (var i = 0; i < sqls.length; i++)
 			s += '<button class="bgColor" onclick="lists.search(event,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button></span>';
