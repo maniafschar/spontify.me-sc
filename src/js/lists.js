@@ -97,12 +97,12 @@ class lists {
 			}
 		};
 		addColumn('createdAt', 10);
+		addColumn('ip', 10);
 		addColumn('method', 10);
-		addColumn('uri', 35);
-		addColumn('contactId', 20);
+		addColumn('uri', 25);
+		addColumn('contactId', 10);
 		addColumn('time', 10);
 		addColumn('status', 10);
-		addColumn('ip', 10);
 		addColumn('city', 10);
 		addColumn('referer', 15);
 		addColumn('query', 15);
