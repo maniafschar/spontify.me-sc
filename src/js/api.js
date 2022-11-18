@@ -37,7 +37,8 @@ class api {
             url: api.url + 'import/location/' + id + '/' + e.previousSibling.value,
             type: 'POST',
             error(r) {
-                e.parentElement.innerHTML = 'Error: ' + r.responseText;
+                e.previousSibling.outerHTML = '';
+                e.outerHTML = 'Error: ' + r.responseText;
             },
             success() {
                 e.parentElement.innerHTML = 'Success';
