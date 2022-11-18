@@ -156,16 +156,11 @@ status::before {
 }
 
 select {
-    border-right: none;
-    border-top: none;
-    border-bottom: none;
-    border-left-color: grey;
-    border-left-width: 1px;
-    border-radius: 0;
+    border: solid 1px rgba(0, 0, 0, 0.2);
+    border-radius: 1em;
     user-select: none;
     outline: none !important;
-    margin-bottom: 1em;
-    font-size: 0.7em;
+    padding: 0.35em;
 }
 
 table img {

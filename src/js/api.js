@@ -32,6 +32,18 @@ class api {
             });
         }, 50);
     }
+    static importLocation(e, id) {
+        $.ajax({
+            url: api.url + 'import/location/' + id + '/' + e.previousSibling.value,
+            type: 'POST',
+            error(r) {
+                e.parentElement.innerHTML = 'Error: ' + r.responseText;
+            },
+            success() {
+                e.parentElement.innerHTML = 'Success';
+            }
+        });
+    }
     static ticketDelete(id, event) {
         $.ajax({
             url: api.url + 'ticket/' + id,

@@ -47,6 +47,9 @@ class start {
     static getDisplayIp(ip) {
         return ip ? '<a href="https://whatismyipaddress.com/ip/' + ip + '" target="sc_ip">' + ip + '</a>' : '';
     }
+    static getDisplayNote(note) {
+        return note ? note.replace(/</g, '&lt;') : '';
+    }
     static init() {
         $('login').remove();
         start.prepareData(start.data);

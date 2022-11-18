@@ -43,6 +43,7 @@ class lists {
 				{ label: 'email', sql: 'ticket.type=\'EMAIL\'' },
 				{ label: 'registration', sql: 'ticket.type=\'REGISTRATION\'' },
 				{ label: 'block', sql: 'ticket.type=\'BLOCK\'' },
+				{ label: 'location', sql: 'ticket.type=\'LOCATION\' and ticket.subject<>\'import\'' },
 				{ label: 'google', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'GOOGLE\'' }
 			];
 		for (var i = 0; i < sqls.length; i++)
@@ -64,6 +65,7 @@ class lists {
 			data[i - 1].createdAt = start.getDisplayDate(data[i - 1].createdAt);
 			data[i - 1].modifiedAt = start.getDisplayDate(data[i - 1].modifiedAt);
 			data[i - 1].ip = start.getDisplayIp(data[i - 1].ip);
+			data[i - 1].note = start.getDisplayNote(data[i - 1].note);
 		}
 		// prepare table
 		var search = $('.log_search').val();

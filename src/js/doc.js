@@ -1,6 +1,4 @@
-import { api } from "./api";
 import { charts } from "./charts";
-import { start } from "./start";
 
 export { doc }
 
@@ -18,8 +16,17 @@ class doc {
 			s += '<buttons><button onclick="api.delete(' + row.id + ')">L&ouml;schen</button>'
 				+ (row.verified ? '' : '<button onclick="api.resend(' + row.id + ')">Email wieder senden</button>')
 				+ '</buttons>';
-		if (row.type == 'ERROR')
+		else if (row.type == 'ERROR')
 			s += '<buttons><button onclick="api.ticketDelete(' + row.id + ',event)">L&ouml;schen</button></buttons>';
+		else if (row.type == 'LOCATION' && row.subject != 'import')
+			s += '<buttons><select>' +
+				'<option value="0"' + (row.subject.indexOf('0 ') == 0 ? ' selected' : '') + '>Shopping</option>' +
+				'<option value="1"' + (row.subject.indexOf('1 ') == 0 ? ' selected' : '') + '>Kultur</option>' +
+				'<option value="2"' + (row.subject.indexOf('2 ') == 0 ? ' selected' : '') + '>Restaurant</option>' +
+				'<option value="3"' + (row.subject.indexOf('3 ') == 0 ? ' selected' : '') + '>Attraktion</option>' +
+				'<option value="4"' + (row.subject.indexOf('4 ') == 0 ? ' selected' : '') + '>Nachtleben</option>' +
+				'<option value="5"' + (row.subject.indexOf('5 ') == 0 ? ' selected' : '') + '>Sport/Hobby</option>' +
+				'</select><button onclick="api.importLocation(this,' + row.id + ')">Importieren</button><button onclick="api.ticketDelete(' + row.id + ',event)">L&ouml;schen</button></buttons>';
 		return '<entry>' + s + '</entry>';
 	}
 	static filter() {
