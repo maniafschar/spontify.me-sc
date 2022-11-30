@@ -40,8 +40,8 @@ class api {
                 e.previousSibling.outerHTML = '';
                 e.outerHTML = 'Error: ' + r.responseText;
             },
-            success() {
-                e.parentElement.innerHTML = 'Success';
+            success(r) {
+                e.parentElement.innerHTML = r ? r : 'success';
             }
         });
     }
