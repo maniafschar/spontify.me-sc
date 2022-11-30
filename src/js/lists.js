@@ -40,10 +40,10 @@ class lists {
 				{ label: 'support', sql: 'log.createdAt>\'{date-1}\' and log.uri like \'/support/%\'' },
 				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri=\'ad\'' },
 				{ label: 'error', sql: 'ticket.type=\'ERROR\'' },
-				{ label: 'email', sql: 'ticket.type=\'EMAIL\'' },
+				{ label: 'email', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'EMAIL\'' },
 				{ label: 'registration', sql: 'ticket.type=\'REGISTRATION\'' },
 				{ label: 'block', sql: 'ticket.type=\'BLOCK\'' },
-				{ label: 'location', sql: 'ticket.type=\'LOCATION\' and ticket.createdAt>\'{date-1}\'' },
+				{ label: 'location', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'LOCATION\'' },
 				{ label: 'google', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'GOOGLE\'' }
 			];
 		for (var i = 0; i < sqls.length; i++)
