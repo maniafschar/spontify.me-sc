@@ -36,12 +36,12 @@ class api {
         $.ajax({
             url: api.url + 'import/location/' + id + '/' + e.previousSibling.value,
             type: 'POST',
-            error(r) {
-                e.previousSibling.outerHTML = '';
-                e.outerHTML = 'Error: ' + r.responseText;
-            },
             success(r) {
-                e.parentElement.innerHTML = r ? r : 'success';
+                if (r) {
+                    e.previousSibling.outerHTML = '';
+                    e.outerHTML = r;
+                } else
+                    e.parentElement.innerHTML = 'success';
             }
         });
     }
