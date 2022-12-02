@@ -59,7 +59,7 @@ class lists {
 		for (var i = 1; i < r.length; i++) {
 			data.push(api.convert(r[0], r[i]));
 			for (var i2 = 0; i2 < r[i].length; i2++) {
-				if (r[1][i2] != r[i][i2])
+				if (r.length == 2 || r[1][i2] != r[i][i2])
 					differentValuesInColumn[r[0][i2].substring(r[0][i2].indexOf('.') + 1)] = true;
 			}
 			data[i - 1].createdAt = start.getDisplayDate(data[i - 1].createdAt);
