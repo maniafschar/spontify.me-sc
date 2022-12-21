@@ -38,7 +38,7 @@ class lists {
 			[
 				{ label: 'log', sql: 'log.createdAt>\'{date-1}\' and log.uri not like \'/support/%\'' },
 				{ label: 'support', sql: 'log.createdAt>\'{date-1}\' and log.uri like \'/support/%\'' },
-				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri=\'ad\'' },
+				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and (log.uri like \'ad%\' or log.uri like \'web%\')' },
 				{ label: 'error', sql: 'ticket.type=\'ERROR\'' },
 				{ label: 'email', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'EMAIL\'' },
 				{ label: 'registration', sql: 'ticket.type=\'REGISTRATION\'' },
