@@ -138,7 +138,7 @@ class lists {
 	}
 	static open(s, i) {
 		$('#log tr').each(function () {
-			if (this.children[i ? i : 4].innerText.indexOf(s) == 0)
+			if (this.children[i ? i : 4].innerText.indexOf(s) > - 1)
 				this.children[0].click();
 		});
 	}
