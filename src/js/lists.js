@@ -128,8 +128,19 @@ class lists {
 		lists.init();
 		$('.log_search').val(search);
 	}
+	static delete() {
+		$('#log tr button[onclick*="api.ticketDelete"]').each(function () {
+			this.click();
+		});
+	}
 	static filter() {
-		$("#log").DataTable().search($("#log_filter input").val()).draw()
+		$("#log").DataTable().search($('#log_filter input').val()).draw()
+	}
+	static open(s, i) {
+		$('#log tr').each(function () {
+			if (this.children[i ? i : 4].innerText.indexOf(s) == 0)
+				this.children[0].click();
+		});
 	}
 	static search(event, sql) {
 		var d = new Date(), i;
