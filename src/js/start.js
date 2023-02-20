@@ -166,14 +166,12 @@ $(function () {
         }
     });
     if (window.localStorage.getItem('credentials')
-        && window.localStorage.getItem('credentials').split('\u0015')[0]
-        && window.localStorage.getItem('credentials').split('\u0015')[1]
-        && window.localStorage.getItem('credentials').split('\u0015')[2]) {
+        && window.localStorage.getItem('credentials').split('\u0015').length == 3) {
         start.user = window.localStorage.getItem('credentials').split('\u0015');
         start.secret = start.user[2];
         start.password = start.user[1];
         start.user = start.user[0];
-        api.init(true);
+        api.init();
     } else
         $('login').css('display', '');
 });
