@@ -106,6 +106,7 @@ class lists {
 		addColumn('contactId', 10);
 		addColumn('time', 10);
 		addColumn('status', 10);
+		addColumn('webCall', 10);
 		addColumn('city', 10);
 		addColumn('referer', 15);
 		addColumn('query', 15);
