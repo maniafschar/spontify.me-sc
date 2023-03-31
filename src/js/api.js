@@ -103,32 +103,4 @@ class api {
             }
         });
     }
-    static marketing() {
-        if (!$('marketing input.text').val())
-            return;
-        var id;
-        if ($('marketing input.search').val())
-            id = [];
-        else {
-            id = $('selection').parents('tr').children('td:nth-child(2)').map(function () {
-                return $(this).text();
-            }).get();
-            if (id.length == 0)
-                return;
-        }
-        $.ajax({
-            url: api.url + 'marketing',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                ids: id,
-                text: $('marketing input.text').val(),
-                search: $('marketing input.search').val(),
-                action: $('marketing input.action').val()
-            }),
-            success(r) {
-                $('marketing').css('display', 'none');
-            }
-        });
-    }
 }

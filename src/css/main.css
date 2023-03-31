@@ -93,8 +93,7 @@ entry buttons {
     display: block;
 }
 
-login,
-marketing {
+login {
     position: fixed;
     width: 40em;
     background: rgba(230, 230, 230, 0.95);
@@ -107,8 +106,7 @@ marketing {
     box-shadow: 0 0 5em rgba(0, 0, 0, 0.3);
 }
 
-login input,
-marketing input {
+login input {
     width: 100%;
     margin-bottom: 1em;
 }

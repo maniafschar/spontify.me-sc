@@ -41,10 +41,6 @@ class doc {
 		$('#filter').val(label == $('#filter').val() ? '' : label);
 		doc.filter();
 	}
-	static toggleMarketing() {
-		var e = $('marketing');
-		e.css('display', e.css('display') == 'block' ? 'none' : 'block');
-	}
 	static toggleSelect(id) {
 		var e = $('#' + id).parents('tr').children('td').first();
 		e.html(e.text() ? '' : '<selection>⚫</selection>');
