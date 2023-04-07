@@ -4,7 +4,7 @@ import { start } from "./start";
 export { api }
 
 class api {
-    static url = 'https://skillvents.com/rest/support/';
+    static url = 'https://skills.community/rest/support/';
 
     static convert(fields, values) {
         var o = {};
