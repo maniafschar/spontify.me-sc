@@ -97,8 +97,6 @@ class api {
                     start.data.push(api.convert(r[0], r[i]));
                 if (start.user && start.password && start.secret)
                     window.localStorage.setItem('credentials', start.user + '\u0015' + start.password + '\u0015' + start.secret);
-                else
-                    window.localStorage.removeItem('credentials');
                 start.init();
             }
         });
