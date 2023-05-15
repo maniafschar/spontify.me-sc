@@ -286,7 +286,7 @@ charts td {
 }
 
 entry label {
-    width: 10em;
+    width: 10vw;
     text-align: right;
     padding: 0.25em;
     position: relative;
@@ -299,6 +299,8 @@ entry value {
     position: relative;
     display: inline-block;
     padding: 0.25em;
+    max-width: 90vw;
+    white-space: break-spaces;
 }
 
 users {
