@@ -78,7 +78,8 @@ class start {
                     'width': '5%'
                 },
                 { 'data': 'id', 'width': '5%' },
-                { 'data': 'pseudonymDisplay', 'width': '15%' },
+                { 'data': 'clientId', 'width': '2%' },
+                { 'data': 'pseudonymDisplay', 'width': '13%' },
                 { 'data': 'createdAt', 'width': '10%' },
                 { 'data': 'lastLogin', 'width': '10%', 'defaultContent': '' },
                 { 'data': 'os', 'width': '10%' },
