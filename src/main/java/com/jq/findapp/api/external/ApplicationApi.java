@@ -2,6 +2,7 @@ package com.jq.findapp.api.external;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.SimpleEmail;
@@ -43,26 +44,40 @@ public class ApplicationApi {
 	}
 
 	public void healthcheck() throws Exception {
-		try {
-			WebClient.create(apiBaseUrl + "healthcheck").get()
-					.header("secret", schedulerSecret).retrieve().toEntity(Void.class).block();
-		} catch (final Exception ex) {
-			restart(restartApp);
-		}
-		try {
-			WebClient.create(observableUrl).get().retrieve().toEntity(Void.class).block();
-		} catch (final Exception ex) {
-			restart(restartWeb);
-		}
+		test(restartApp, this::testApp);
+		test(restartWeb, this::testWeb);
 	}
 
-	private void restart(final String process) {
+	private void test(final String process, final Function<Void, Void> function) {
+		for (int i = 0; i < 30; i++) {
+			try {
+				function.apply(null);
+				return;
+			} catch (final Exception ex) {
+				try {
+					Thread.sleep(2000);
+				} catch (final InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		try {
 			new ProcessBuilder(process.split(" ")).start();
 			mail(process);
 		} catch (final IOException e) {
 			mail(process + " failed: " + e.getMessage());
 		}
+	}
+
+	private Void testApp(final Void v) {
+		WebClient.create(apiBaseUrl + "healthcheck").get()
+				.header("secret", schedulerSecret).retrieve().toEntity(Void.class).block();
+		return null;
+	}
+
+	private Void testWeb(final Void v) {
+		WebClient.create(observableUrl).get().retrieve().toEntity(Void.class).block();
+		return null;
 	}
 
 	private void mail(final String process) {
