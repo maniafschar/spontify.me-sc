@@ -49,7 +49,7 @@ public class ApplicationApi {
 	}
 
 	private void ping(final String process, final Function<Void, Void> function) {
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 15; i++) {
 			try {
 				function.apply(null);
 				return;
