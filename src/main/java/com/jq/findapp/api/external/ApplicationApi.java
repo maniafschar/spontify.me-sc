@@ -44,11 +44,11 @@ public class ApplicationApi {
 	}
 
 	public void healthcheck() throws Exception {
-		test(restartApp, this::testApp);
-		test(restartWeb, this::testWeb);
+		ping(restartApp, this::pingApp);
+		ping(restartWeb, this::pingWeb);
 	}
 
-	private void test(final String process, final Function<Void, Void> function) {
+	private void ping(final String process, final Function<Void, Void> function) {
 		for (int i = 0; i < 30; i++) {
 			try {
 				function.apply(null);
@@ -69,13 +69,13 @@ public class ApplicationApi {
 		}
 	}
 
-	private Void testApp(final Void v) {
+	private Void pingApp(final Void v) {
 		WebClient.create(apiBaseUrl + "healthcheck").get()
 				.header("secret", schedulerSecret).retrieve().toEntity(Void.class).block();
 		return null;
 	}
 
-	private Void testWeb(final Void v) {
+	private Void pingWeb(final Void v) {
 		WebClient.create(observableUrl).get().retrieve().toEntity(Void.class).block();
 		return null;
 	}
