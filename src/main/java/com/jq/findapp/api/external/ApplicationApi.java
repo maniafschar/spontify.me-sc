@@ -43,12 +43,12 @@ public class ApplicationApi {
 	}
 
 	public void healthcheck() throws Exception {
-		ping(restartWeb, 2, () -> WebClient.create(observableUrl).get().retrieve().toEntity(Void.class).block());
-		ping(restartApp, 15, () -> WebClient.create(apiBaseUrl + "healthcheck").get()
+		check(restartWeb, 4, () -> WebClient.create(observableUrl).get().retrieve().toEntity(Void.class).block());
+		check(restartApp, 15, () -> WebClient.create(apiBaseUrl + "healthcheck").get()
 				.header("secret", schedulerSecret).retrieve().toEntity(Void.class).block());
 	}
 
-	private void ping(final String process, final int max, final Runnable ping) {
+	private void check(final String process, final int max, final Runnable ping) {
 		for (int i = 0; i < max; i++) {
 			try {
 				ping.run();
