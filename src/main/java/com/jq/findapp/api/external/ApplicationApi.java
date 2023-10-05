@@ -2,7 +2,6 @@ package com.jq.findapp.api.external;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.function.Function;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.SimpleEmail;
@@ -44,14 +43,15 @@ public class ApplicationApi {
 	}
 
 	public void healthcheck() throws Exception {
-		ping(restartApp, this::pingApp);
-		ping(restartWeb, this::pingWeb);
+		ping(restartWeb, 2, () -> WebClient.create(observableUrl).get().retrieve().toEntity(Void.class).block());
+		ping(restartApp, 15, () -> WebClient.create(apiBaseUrl + "healthcheck").get()
+				.header("secret", schedulerSecret).retrieve().toEntity(Void.class).block());
 	}
 
-	private void ping(final String process, final Function<Void, Void> function) {
-		for (int i = 0; i < 15; i++) {
+	private void ping(final String process, final int max, final Runnable ping) {
+		for (int i = 0; i < max; i++) {
 			try {
-				function.apply(null);
+				ping.run();
 				return;
 			} catch (final Exception ex) {
 				try {
@@ -67,17 +67,6 @@ public class ApplicationApi {
 		} catch (final IOException e) {
 			mail(process + " failed: " + e.getMessage());
 		}
-	}
-
-	private Void pingApp(final Void v) {
-		WebClient.create(apiBaseUrl + "healthcheck").get()
-				.header("secret", schedulerSecret).retrieve().toEntity(Void.class).block();
-		return null;
-	}
-
-	private Void pingWeb(final Void v) {
-		WebClient.create(observableUrl).get().retrieve().toEntity(Void.class).block();
-		return null;
 	}
 
 	private void mail(final String process) {
