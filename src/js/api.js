@@ -34,7 +34,7 @@ class api {
     }
     static importLocation(e, id) {
         $.ajax({
-            url: api.url + 'import/location/' + id + '/' + e.previousSibling.value,
+            url: api.url + 'location/import/' + id + '/' + e.previousSibling.value,
             type: 'POST',
             success(r) {
                 if (r) {
