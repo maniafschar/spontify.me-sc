@@ -2,7 +2,7 @@ import { api } from "./api";
 import { doc } from "./doc";
 import { start } from "./start";
 
-export { lists }
+export { lists };
 
 class lists {
 	static logTable = null;
@@ -36,8 +36,8 @@ class lists {
 		e.setAttribute('class', 'buttons');
 		var s = '', sqls =
 			[
-				{ label: 'log', sql: 'log.createdAt>\'{date-1}\' and log.uri not like \'/support/%\'' },
-				{ label: 'support', sql: 'log.createdAt>\'{date-1}\' and log.uri like \'/support/%\'' },
+				{ label: 'log', sql: 'log.createdAt>\'{date-12h}\' and log.uri not like \'/support/%\'' },
+				{ label: 'support', sql: 'log.createdAt>\'{date-2h}\' and log.uri like \'/support/%\'' },
 				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri not like \'/%\'' },
 				{ label: 'error', sql: 'ticket.type=\'ERROR\'' },
 				{ label: 'paypal', sql: 'ticket.createdAt>\'{date-7}\' and ticket.type=\'PAYPAL\'' },
@@ -150,8 +150,11 @@ class lists {
 			while ((i = search.indexOf('{date')) > -1) {
 				var days = search.substring(i + 6, search.indexOf('}'));
 				var d2 = new Date();
-				d2.setDate(d.getDate() - days);
-				search = search.replace('{date-' + days + '}', d2.getFullYear() + '-' + (d2.getMonth() + 1) + '-' + d2.getDate());
+				if (days.indexOf('h') > 0)
+					d2.setHours(d.getHours() - days.replace('h', ''));
+				else
+					d2.setDate(d.getDate() - days);
+				search = search.replace('{date-' + days + '}', d2.getFullYear() + '-' + (d2.getMonth() + 1) + '-' + d2.getDate() + (days.indexOf('h') > 0 ? ' ' + d2.getHours() + ':' + d2.getMinutes() + ':' + d2.getSeconds() : ''));
 			}
 			$('input.log_search').val(search);
 		}
