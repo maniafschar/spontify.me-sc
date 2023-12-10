@@ -38,14 +38,15 @@ public class ApplicationApi {
 	private String password;
 
 	public void scheduler() {
-		WebClient.create(apiBaseUrl + "scheduler").put()
-				.header("secret", schedulerSecret).retrieve().toEntity(Void.class).block();
+		WebClient.create(this.apiBaseUrl + "scheduler").put()
+				.header("secret", this.schedulerSecret).retrieve().toEntity(Void.class).block();
 	}
 
 	public void healthcheck() throws Exception {
-		check(restartWeb, 4, () -> WebClient.create(observableUrl).get().retrieve().toEntity(Void.class).block());
-		check(restartApp, 15, () -> WebClient.create(apiBaseUrl + "healthcheck").get()
-				.header("secret", schedulerSecret).retrieve().toEntity(Void.class).block());
+		this.check(this.restartWeb, 8,
+				() -> WebClient.create(this.observableUrl).get().retrieve().toEntity(Void.class).block());
+		this.check(this.restartApp, 16, () -> WebClient.create(this.apiBaseUrl + "healthcheck").get()
+				.header("secret", this.schedulerSecret).retrieve().toEntity(Void.class).block());
 	}
 
 	private void check(final String process, final int max, final Runnable ping) {
@@ -63,22 +64,22 @@ public class ApplicationApi {
 		}
 		try {
 			new ProcessBuilder(process.split(" ")).start();
-			mail(process);
+			this.mail(process);
 		} catch (final IOException e) {
-			mail(process + " failed: " + e.getMessage());
+			this.mail(process + " failed: " + e.getMessage());
 		}
 	}
 
 	private void mail(final String process) {
 		try {
 			final SimpleEmail email = new SimpleEmail();
-			email.setHostName(host);
-			email.setSmtpPort(port);
+			email.setHostName(this.host);
+			email.setSmtpPort(this.port);
 			email.setCharset(StandardCharsets.UTF_8.name());
-			email.setAuthenticator(new DefaultAuthenticator(address, password));
+			email.setAuthenticator(new DefaultAuthenticator(this.address, this.password));
 			email.setSSLOnConnect(true);
-			email.setFrom(address);
-			email.addTo(address);
+			email.setFrom(this.address);
+			email.addTo(this.address);
 			email.setSubject("HEALTCHECK");
 			email.setMsg(process);
 			email.send();
