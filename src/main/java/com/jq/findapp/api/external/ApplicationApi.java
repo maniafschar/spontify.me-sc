@@ -13,6 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ApplicationApi {
 	@Value("${app.api.base.url}")
 	private String apiBaseUrl;
+
 	@Value("${app.api.observable.url}")
 	private String observableUrl;
 
@@ -37,16 +38,20 @@ public class ApplicationApi {
 	@Value("${app.mail.password}")
 	private String password;
 
+	private long restart = 0;
+
 	public void scheduler() {
 		WebClient.create(this.apiBaseUrl + "scheduler").put()
 				.header("secret", this.schedulerSecret).retrieve().toEntity(Void.class).block();
 	}
 
 	public void healthcheck() throws Exception {
-		this.check(this.restartWeb, 8,
-				() -> WebClient.create(this.observableUrl).get().retrieve().toEntity(Void.class).block());
-		this.check(this.restartApp, 16, () -> WebClient.create(this.apiBaseUrl + "healthcheck").get()
-				.header("secret", this.schedulerSecret).retrieve().toEntity(Void.class).block());
+		if (System.currentTimeMillis() - this.restart > 40000) {
+			this.check(this.restartWeb, 4,
+					() -> WebClient.create(this.observableUrl).get().retrieve().toEntity(Void.class).block());
+			this.check(this.restartApp, 15, () -> WebClient.create(this.apiBaseUrl + "healthcheck").get()
+					.header("secret", this.schedulerSecret).retrieve().toEntity(Void.class).block());
+		}
 	}
 
 	private void check(final String process, final int max, final Runnable ping) {
@@ -64,6 +69,7 @@ public class ApplicationApi {
 		}
 		try {
 			new ProcessBuilder(process.split(" ")).start();
+			this.restart = System.currentTimeMillis();
 			this.mail(process);
 		} catch (final IOException e) {
 			this.mail(process + " failed: " + e.getMessage());
