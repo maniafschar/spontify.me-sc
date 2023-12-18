@@ -38,8 +38,8 @@ class lists {
 			[
 				{ label: 'log', sql: 'log.createdAt>\'{date-12h}\' and log.uri not like \'/support/%\'' },
 				{ label: 'support', sql: 'log.createdAt>\'{date-2h}\' and log.uri like \'/support/%\'' },
-				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri not like \'/%\'' },
 				{ label: 'error', sql: 'ticket.type=\'ERROR\'' },
+				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri not like \'/%\'' },
 				{ label: 'paypal', sql: 'ticket.createdAt>\'{date-7}\' and ticket.type=\'PAYPAL\'' },
 				{ label: 'email', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'EMAIL\'' },
 				{ label: 'registration', sql: 'ticket.type=\'REGISTRATION\'' },
@@ -47,13 +47,20 @@ class lists {
 				{ label: 'location', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'LOCATION\'' },
 				{ label: 'google', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'GOOGLE\'' }
 			];
-		for (var i = 0; i < sqls.length; i++)
-			s += '<button class="bgColor" onclick="lists.search(event,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button></span>';
+		for (var i = 0; i < 3; i++)
+			s += '<button class="bgColor" onclick="lists.search(event,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button>';
+		s += '<button class="bgColor" onclick="lists.more()">more</button><more style="display:none;">';
+		for (var i = 3; i < sqls.length; i++)
+			s += '<button class="bgColor" onclick="lists.search(event,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button>';
+		s += '</more>';
 		e.innerHTML = s;
 		$('#log_wrapper')[0].insertBefore(e, $('#log')[0]);
 		e = $('#log_wrapper .dataTables_filter label')[0];
 		e.innerHTML = e.innerHTML.replace('Search:', '');
 		$('#log_filter input').on('keyup', lists.filter);
+	}
+	static more() {
+		$('more').toggle();
 	}
 	static data(r) {
 		var data = [], differentValuesInColumn = {};

@@ -173,7 +173,7 @@ table img {
     display: inline-block;
     position: absolute;
     top: 3.8em;
-    left: 1em;
+    right: 15.5em;
     padding: 0 !important;
     margin: 0;
     font-size: 0.7em;
@@ -181,6 +181,8 @@ table img {
 
 .dataTables_filter {
     margin: 1.5em 1em 0 0;
+    z-index: 2;
+    position: relative;
 }
 
 label {
@@ -278,11 +280,20 @@ charts td {
 .dataTables_wrapper .buttons {
     margin-top: 1.3em;
     position: relative;
-    float: right;
+    text-align: left;
+    display: block;
+    width: 100%;
+    padding-left: 0.75em;
 }
 
 .dataTables_wrapper .buttons button {
     padding: 0.25em 0.75em;
+}
+
+.dataTables_wrapper .buttons more {
+    display: block;
+    position: relative;
+    padding-top: 0.5em;
 }
 
 entry label {
