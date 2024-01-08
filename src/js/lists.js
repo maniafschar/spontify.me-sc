@@ -36,16 +36,16 @@ class lists {
 		e.setAttribute('class', 'buttons');
 		var s = '', sqls =
 			[
-				{ label: 'log', sql: 'log.createdAt>\'{date-12h}\' and log.uri not like \'/support/%\'' },
-				{ label: 'support', sql: 'log.createdAt>\'{date-2h}\' and log.uri like \'/support/%\'' },
+				{ label: 'log', sql: 'log.createdAt>{date-12h} and log.uri not like \'/support/%\'' },
+				{ label: 'support', sql: 'log.createdAt>{date-2h} and log.uri like \'/support/%\'' },
 				{ label: 'error', sql: 'ticket.type=\'ERROR\'' },
-				{ label: 'ad', sql: 'log.createdAt>\'{date-1}\' and log.uri not like \'/%\'' },
-				{ label: 'paypal', sql: 'ticket.createdAt>\'{date-7}\' and ticket.type=\'PAYPAL\'' },
-				{ label: 'email', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'EMAIL\'' },
+				{ label: 'ad', sql: 'log.createdAt>{date-1} and log.uri not like \'/%\'' },
+				{ label: 'paypal', sql: 'ticket.createdAt>{date-7} and ticket.type=\'PAYPAL\'' },
+				{ label: 'email', sql: 'ticket.createdAt>{date-1} and ticket.type=\'EMAIL\'' },
 				{ label: 'registration', sql: 'ticket.type=\'REGISTRATION\'' },
 				{ label: 'block', sql: 'ticket.type=\'BLOCK\'' },
-				{ label: 'location', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'LOCATION\'' },
-				{ label: 'google', sql: 'ticket.createdAt>\'{date-1}\' and ticket.type=\'GOOGLE\'' }
+				{ label: 'location', sql: 'ticket.createdAt>{date-1} and ticket.type=\'LOCATION\'' },
+				{ label: 'google', sql: 'ticket.createdAt>{date-1} and ticket.type=\'GOOGLE\'' }
 			];
 		for (var i = 0; i < 3; i++)
 			s += '<button class="bgColor" onclick="lists.search(event,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button>';
@@ -153,7 +153,7 @@ class lists {
 	static search(event, sql) {
 		var d = new Date(), i;
 		if (sql) {
-			var search = sql.replace('{date}', d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
+			var search = sql.replace('{date}', 'cast(\'' + d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + '\' as timestamp)');
 			while ((i = search.indexOf('{date')) > -1) {
 				var days = search.substring(i + 6, search.indexOf('}'));
 				var d2 = new Date();
@@ -161,7 +161,7 @@ class lists {
 					d2.setHours(d.getHours() - days.replace('h', ''));
 				else
 					d2.setDate(d.getDate() - days);
-				search = search.replace('{date-' + days + '}', d2.getFullYear() + '-' + (d2.getMonth() + 1) + '-' + d2.getDate() + (days.indexOf('h') > 0 ? ' ' + d2.getHours() + ':' + d2.getMinutes() + ':' + d2.getSeconds() : ''));
+				search = search.replace('{date-' + days + '}', 'cast(\'' + d2.getFullYear() + '-' + (d2.getMonth() + 1) + '-' + d2.getDate() + (days.indexOf('h') > 0 ? ' ' + d2.getHours() + ':' + d2.getMinutes() + ':' + d2.getSeconds() : '') + '\' as timestamp)');
 			}
 			$('input.log_search').val(search);
 		}
