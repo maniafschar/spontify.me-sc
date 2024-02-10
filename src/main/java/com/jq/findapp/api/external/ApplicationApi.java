@@ -86,7 +86,7 @@ public class ApplicationApi {
 			email.setSSLOnConnect(true);
 			email.setFrom(this.address);
 			email.addTo(this.address);
-			email.setSubject("HEALTCHECK");
+			email.setSubject("HEALTHCHECK");
 			email.setMsg(process);
 			email.send();
 		} catch (final Exception e) {
