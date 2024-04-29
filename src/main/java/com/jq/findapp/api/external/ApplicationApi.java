@@ -38,7 +38,7 @@ public class ApplicationApi {
 	@Value("${app.mail.password}")
 	private String password;
 
-	private long restart = 0;
+	private volatile long restart = 0;
 
 	public void scheduler() {
 		WebClient.create(this.apiBaseUrl + "scheduler").put()
