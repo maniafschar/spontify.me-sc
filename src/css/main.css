@@ -240,6 +240,12 @@ charts {
     overflow: auto;
 }
 
+charts>div {
+    padding: 2em;
+    text-align: left;
+    line-height: 1.5;
+}
+
 charts canvas {
     max-height: 100%;
 }

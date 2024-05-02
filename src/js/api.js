@@ -1,7 +1,7 @@
 import { lists } from "./lists";
 import { start } from "./start";
 
-export { api }
+export { api };
 
 class api {
     static url = 'https://skills.community/rest/support/';
@@ -42,6 +42,18 @@ class api {
                     e.outerHTML = r;
                 } else
                     e.parentElement.innerHTML = 'success';
+            }
+        });
+    }
+    static report() {
+        $.ajax({
+            url: api.url + 'report/7',
+            type: 'GET',
+            success(r) {
+                var s = '<div><table><tr><td>&nbsp;</td><td><b>anonym</b></td><td><b>login</b></td><td><b>teaser</b></td></tr>';
+                for (var date in r.anonym)
+                    s += '<tr><td>' + date + '</td><td>' + r.anonym[date].length + '</td><td>' + r.login[date].length + '</td><td>' + r.teaser[date].length + '</td></tr>';
+                $('charts').html(s + '</table>');
             }
         });
     }

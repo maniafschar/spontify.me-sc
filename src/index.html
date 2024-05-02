@@ -66,36 +66,6 @@
     </table>
     <table id="log" class="display" style="display:none;"></table>
     <charts style="transform:scale(0);">
-        <table>
-            <tr>
-                <td style="width:13%;padding:0.5em 0 0 0.25em;">
-                    <select size="3" onchange="charts.chooseCategory()" id="chartCategory" style="height:7.2em;">
-                        <option value="registration" selected="selected">Registrierungen</option>
-                        <option value="growthRegistration">Wachstum</option>
-                        <option value="others">Sonstiges</option>
-                    </select>
-                    <br />
-                    <select size="5" onchange="charts.draw()" id="chartDataType" style="height:12em;">
-                        <option value="byDay" category="registration,growthRegistration">nach Tagen</option>
-                        <option value="byWeek" category="registration,growthRegistration">nach Wochen</option>
-                        <option value="byMonth" category="registration,growthRegistration">nach Monaten</option>
-                        <option value="byDayOfWeek" category="registration">nach Wochentag</option>
-                        <option value="byDayTime" category="registration">nach Uhrzeit</option>
-                    </select>
-                    <br />
-                    <select size="3" onchange="charts.draw()" id="chartTimespan" style="height:7.2em;">
-                        <option value="month" selected="selected">Monat</option>
-                        <option value="year">Jahr</option>
-                        <option value="all">Alle</option>
-                    </select>
-                    <div style="text-align:center;margin-top:1em;"><button onclick="charts.save()">Speichern</button>
-                    </div>
-                </td>
-                <td style="width:87%;">
-                    <canvas id="chart"></canvas>
-                </td>
-            </tr>
-        </table>
     </charts>
 </body>
 

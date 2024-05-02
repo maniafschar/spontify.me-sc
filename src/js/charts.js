@@ -1,6 +1,7 @@
+import { api } from "./api";
 import { start } from "./start";
 
-export { charts }
+export { charts };
 
 class charts {
     static chart = null;
@@ -8,19 +9,13 @@ class charts {
 
     static toggle() {
         var e = $('charts');
-        if (e.css('transform').indexOf('1') > 0) {
+        if (e.css('transform').indexOf('1') > 0)
             e.css('transform', 'scale(0)');
-            if (charts.filter) {
-                charts.filter = null;
-                $('#contacts').DataTable().search($('input#search').val()).draw();
-                $('drillDownTitle').text('');
-            }
-        } else {
+        else {
             e.css('margin-top', '');
             e.css('margin-left', '');
             e.css('transform', 'scale(1)');
-            if (!$('#chartDataType option:selected').length)
-                charts.chooseCategory();
+            api.report();
         }
     }
     static draw() {
