@@ -50,10 +50,14 @@ class api {
             url: api.url + 'report/7',
             type: 'GET',
             success(r) {
-                var s = '<div><table><tr><td>&nbsp;</td><td><b>anonym</b></td><td><b>login</b></td><td><b>teaser</b></td></tr>';
-                for (var date in r.anonym)
-                    s += '<tr><td>' + date + '</td><td>' + r.anonym[date].length + '</td><td>' + r.login[date].length + '</td><td>' + r.teaser[date].length + '</td></tr>';
-                $('charts').html(s + '</table>');
+                var s = '<div>';
+                for (var client in r) {
+                    s += '<table><tr><td><b>Client ' + client + '</b></td><td><b>anonym</b></td><td><b>login</b></td><td><b>teaser</b></td></tr>';
+                    for (var date in r[client].anonym)
+                        s += '<tr><td>' + date + '</td><td>' + r[client].anonym[date].length + '</td><td>' + r[client].login[date]?.length + '</td><td>' + r[client].teaser[date]?.length + '</td></tr>';
+                    s += '</table><br/><br/>';
+                }
+                $('charts').html(s + '</div>');
             }
         });
     }
