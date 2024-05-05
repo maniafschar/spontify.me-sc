@@ -50,14 +50,21 @@ class api {
             url: api.url + 'report/7',
             type: 'GET',
             success(r) {
-                var s = '<div>';
+                var s = '<div>', dates = [];
+                for (var client in r) {
+                    for (var date in r[client].anonym) {
+                        if (dates.indexOf(date) < 0)
+                            dates.push(date);
+                    }
+                }
+                dates.sort();
                 for (var client in r) {
                     s += '<table><tr><td><b>Client ' + client + '</b></td><td><b>anonym</b></td><td><b>login</b></td><td><b>teaser</b></td></tr>';
-                    for (var date in r[client].anonym)
-                        s += '<tr><td>' + date + '</td><td>' + r[client].anonym[date].length + '</td><td>' + r[client].login[date]?.length + '</td><td>' + r[client].teaser[date]?.length + '</td></tr>';
+                    for (var i = 0; i < dates.length; i++)
+                        s += '<tr><td>' + dates[i] + '</td><td>' + r[client].anonym[dates[i]]?.length + '</td><td>' + r[client].login[dates[i]]?.length + '</td><td>' + r[client].teaser[dates[i]]?.length + '</td></tr>';
                     s += '</table><br/><br/>';
                 }
-                $('charts').html(s + '</div>');
+                $('charts').html(s.replace(/undefined/g, '-') + '</div>');
             }
         });
     }
