@@ -7,7 +7,7 @@ class charts {
     static chart = null;
     static filter = null;
 
-    static toggle() {
+    static toggle(exec) {
         var e = $('charts');
         if (e.css('transform').indexOf('1') > 0)
             e.css('transform', 'scale(0)');
@@ -15,7 +15,8 @@ class charts {
             e.css('margin-top', '');
             e.css('margin-left', '');
             e.css('transform', 'scale(1)');
-            api.report();
+            if (exec)
+                exec();
         }
     }
     static draw() {
