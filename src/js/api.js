@@ -68,6 +68,21 @@ class api {
             }
         });
     }
+    static reportApi() {
+        $.ajax({
+            url: api.url + 'report/90/api',
+            type: 'GET',
+            success(r) {
+                var s = '', keys = [];
+                for (var e in r)
+                    keys.push(e);
+                keys.sort();
+                for (var e in keys)
+                    s += '<tr><td><b>' + e + '</b></td><td>' + r[e] + '</td></tr>';
+                $('charts').html('<div><table>' + s + '</table></div>');
+            }
+        });
+    }
     static ticketDelete(id, event) {
         $.ajax({
             url: api.url + 'ticket/' + id,
