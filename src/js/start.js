@@ -10,13 +10,6 @@ class start {
     static secret;
     static user;
 
-    static beforeServerCall(xhr) {
-        var salt = ('' + new Date().getTime() + Math.random()).replace(/[01]\./, '.');
-        xhr.setRequestHeader('clientId', 4);
-        xhr.setRequestHeader('secret', start.secret);
-        xhr.setRequestHeader('salt', salt);
-        xhr.setRequestHeader('password', sha256.hash(start.password + salt + start.user));
-    }
     static fillStatistics() {
         var verified = 0;
         for (var i = 0; i < start.data.length; i++) {
@@ -162,7 +155,7 @@ $(function () {
         crossDomain: true,
         cache: false,
         timeout: 60000,
-        beforeSend: start.beforeServerCall,
+        beforeSend: api.beforeServerCall,
         error: function (e) {
             alert(e.responseText);
         }
