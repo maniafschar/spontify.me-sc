@@ -6,6 +6,13 @@ export { api };
 class api {
     static url = 'https://skills.community/rest/support/';
 
+    static beforeServerCall(xhr) {
+        var salt = ('' + new Date().getTime() + Math.random()).replace(/[01]\./, '.');
+        xhr.setRequestHeader('clientId', 4);
+        xhr.setRequestHeader('secret', start.secret);
+        xhr.setRequestHeader('salt', salt);
+        xhr.setRequestHeader('password', sha256.hash(start.password + salt + start.user));
+    }
     static convert(fields, values) {
         var o = {};
         for (var i = 0; i < fields.length; i++) {
