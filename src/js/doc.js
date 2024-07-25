@@ -61,7 +61,13 @@ class doc {
 		return comparator;
 	}
 	static toggle() {
-		var e = $('#build_wrapper');
-		e.css('display', e.css('display') != 'none' ? 'none' : 'block');
+		var e = $('build');
+	        if (e.css('transform').indexOf('1') > 0)
+	            e.css('transform', 'scale(0)');
+	        else {
+	            e.css('margin-top', '');
+	            e.css('margin-left', '');
+	            e.css('transform', 'scale(1)');
+	        }
 	}
 }
