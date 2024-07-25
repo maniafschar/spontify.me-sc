@@ -60,4 +60,8 @@ class doc {
 			return;
 		return comparator;
 	}
+	static toggle() {
+		var e = $('#build_wrapper');
+		e.css('display', e.css('display') != 'none' ? 'none' : 'block');
+	}
 }
