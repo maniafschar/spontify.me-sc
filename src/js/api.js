@@ -13,6 +13,15 @@ class api {
         xhr.setRequestHeader('salt', salt);
         xhr.setRequestHeader('password', sha256.hash(start.password + salt + start.user));
     }
+    static build(path) {
+        $.ajax({
+            url: api.url + 'build/' + path,
+            type: 'POST',
+            success(r) {
+                $('build div.output').html(r);
+            }
+        });
+    }
     static convert(fields, values) {
         var o = {};
         for (var i = 0; i < fields.length; i++) {
