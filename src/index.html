@@ -26,7 +26,6 @@
     <buttons>
         <button onclick="doc.toggle()">Build</button>
         <button onclick="charts.toggle(api.report)">Report</button>
-        <button onclick="charts.toggle(api.reportApi)">Report Api</button>
         <button onclick="lists.toggle()">Log</button>
     </buttons>
     <login style="display:none;">
@@ -69,7 +68,8 @@
     <charts style="transform:scale(0);">
     </charts>
     <build style="transform:scale(0);">
-        <button onclick="api.build('client/' + $('build input').val())">Client</button><input name="buildClients" value="1,4,6"></input><br/>
+        <button onclick="api.build('client/' + $('build input').val())">Client</button><input name="buildClients"
+            value="1,4,6"></input><br />
         <button onclick="api.build('server')">Server</button>
         <div class="output"></div>
     </build>

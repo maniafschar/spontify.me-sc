@@ -1,8 +1,8 @@
-import { doc } from "./doc";
-import { charts } from "./charts";
 import { api } from "./api";
+import { charts } from "./charts";
+import { doc } from "./doc";
 
-export { start };
+export { sha256, start };
 
 class start {
     static data = [];

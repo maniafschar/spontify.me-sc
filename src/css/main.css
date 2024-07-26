@@ -226,6 +226,7 @@ body.edit actions {
     display: block;
 }
 
+build,
 charts {
     position: fixed;
     width: 90%;
