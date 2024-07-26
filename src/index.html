@@ -68,7 +68,7 @@
     <charts style="transform:scale(0);">
     </charts>
     <build style="transform:scale(0);">
-        <button onclick="api.build('client/' + $('build input').val())">Client</button><input name="buildClients"
+        <button onclick="api.build('client|' + $('build input').val())">Client</button><input name="buildClients"
             value="1,4,6"></input><br />
         <button onclick="api.build('server')">Server</button>
         <div class="output"></div>
