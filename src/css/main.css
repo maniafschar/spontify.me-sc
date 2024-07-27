@@ -237,6 +237,10 @@ code.output v {
     color: red;
 }
 
+build button {
+    margin: 1em;
+}
+
 build,
 charts {
     position: fixed;
