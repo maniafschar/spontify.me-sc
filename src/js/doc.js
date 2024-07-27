@@ -1,6 +1,6 @@
 import { charts } from "./charts";
 
-export { doc }
+export { doc };
 
 class doc {
 	static closePopup(tag) {
@@ -60,14 +60,36 @@ class doc {
 			return;
 		return comparator;
 	}
+	static renderJson(json, element) {
+		var recurse = function (branch) {
+			var ul = document.createElement('ul');
+			for (var child in branch) {
+				if (child) {
+					var li = document.createElement('li');
+					if (typeof branch[child] == 'object') {
+						li.appendChild(document.createTextNode(child));
+						li.appendChild(recurse(branch[child]));
+					} else {
+						li.appendChild(document.createTextNode(child + ': '));
+						var v = document.createElement('v');
+						v.appendChild(document.createTextNode(branch[child]));
+						li.appendChild(v);
+					}
+					ul.appendChild(li);
+				}
+			}
+			return ul;
+		};
+		element.appendChild(recurse(json));
+	}
 	static toggle() {
 		var e = $('build');
-	        if (e.css('transform').indexOf('1') > 0)
-	            e.css('transform', 'scale(0)');
-	        else {
-	            e.css('margin-top', '');
-	            e.css('margin-left', '');
-	            e.css('transform', 'scale(1)');
-	        }
+		if (e.css('transform').indexOf('1') > 0)
+			e.css('transform', 'scale(0)');
+		else {
+			e.css('margin-top', '');
+			e.css('margin-left', '');
+			e.css('transform', 'scale(1)');
+		}
 	}
 }

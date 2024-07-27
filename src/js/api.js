@@ -1,3 +1,4 @@
+import { doc } from "./doc";
 import { lists } from "./lists";
 import { sha256, start } from "./start";
 
@@ -14,11 +15,41 @@ class api {
         xhr.setRequestHeader('password', sha256.hash(start.password + salt + start.user));
     }
     static build(path) {
+        var out = $('build code.output');
+        out.html('Building.');
+        var time = new Date().getTime();
         $.ajax({
             url: api.url + 'build/' + path,
             type: 'POST',
-            success(r) {
-                $('build div.output').html(r);
+            success() {
+                var ping = function () {
+                    $.ajax({
+                        url: api.url + 'build/state',
+                        type: 'POST',
+                        error() {
+                            setTimeout(ping, 1000);
+                            out.html(out.html() + '.');
+                        },
+                        success(r) {
+                            if (path == 'server' && time > r['process.start.time']['measurements'][0].value * 1000) {
+                                setTimeout(ping, 1000);
+                                out.html(out.html() + '.');
+                            } else {
+                                r['started'] = start.getDisplayDate(r['process.start.time']['measurements'][0].value * 1000);
+                                out.html('');
+                                $.ajax({
+                                    url: api.url + 'build/processes',
+                                    type: 'POST',
+                                    success(r2) {
+                                        r['processes'] = '\n' + r2;
+                                        doc.renderJson(r, out[0]);
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+                setTimeout(ping, 1000);
             }
         });
     }

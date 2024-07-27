@@ -226,6 +226,17 @@ body.edit actions {
     display: block;
 }
 
+code.output {
+    display: block;
+    white-space: break-spaces;
+    padding: 2em;
+    text-align: left;
+}
+
+code.output v {
+    color: red;
+}
+
 build,
 charts {
     position: fixed;
