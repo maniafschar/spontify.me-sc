@@ -23,6 +23,7 @@ class api {
 			out.html(out.html() + '.');
 		}
 		var pingId = setTimeout(ping, 1000);
+		var time = new Date().getTime();
 		$.ajax({
 			url: api.url + 'build/' + path,
 			type: 'POST',
@@ -44,7 +45,7 @@ class api {
 								else {
 									clearTimeout(pingId);
 									r2['started'] = start.getDisplayDate(r2['process.start.time']['measurements'][0].value * 1000);
-									out.html('');
+									out.html('build took ' + ((new Date().getTime() - time) / 1000) + ' seconds\n');
 									doc.renderJson(r2, out[0]);
 								}
 							}
@@ -55,7 +56,7 @@ class api {
 			},
 			success(r) {
 				clearTimeout(pingId);
-				out.html(r);
+				out.html('build took ' + ((new Date().getTime() - time) / 1000) + ' seconds\n' + r);
 			}
 		});
 	}
