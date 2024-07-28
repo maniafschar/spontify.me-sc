@@ -18,6 +18,9 @@ class api {
 		var out = $('build code.output');
 		out.html('Running.');
 		var time = new Date().getTime();
+		var calcTime = function () {
+			return 'request took ' + ((new Date().getTime() - time) / 1000) + ' seconds\n';
+		}
 		var ping = function () {
 			pingId = setTimeout(ping, 1000);
 			out.html(out.html() + '.');
@@ -45,7 +48,7 @@ class api {
 								else {
 									clearTimeout(pingId);
 									r2['started'] = start.getDisplayDate(r2['process.start.time']['measurements'][0].value * 1000);
-									out.html('build took ' + ((new Date().getTime() - time) / 1000) + ' seconds\n');
+									out.html(calcTime());
 									doc.renderJson(r2, out[0]);
 								}
 							}
@@ -56,7 +59,7 @@ class api {
 			},
 			success(r) {
 				clearTimeout(pingId);
-				out.html('build took ' + ((new Date().getTime() - time) / 1000) + ' seconds\n' + r);
+				out.html(calcTime() + r);
 			}
 		});
 	}
