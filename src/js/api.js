@@ -45,7 +45,7 @@ class api {
 								else {
 									clearTimeout(pingId);
 									console.log(r);
-									out.html(r.responseText);
+									out.html(calcTime() + r.responseText);
 								}
 							},
 							success(r2) {
