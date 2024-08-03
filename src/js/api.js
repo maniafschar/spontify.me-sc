@@ -35,12 +35,18 @@ class api {
 					clearTimeout(pingId);
 					out.html(r.responseText);
 				} else {
+					var count = 0;
 					var restart = function () {
 						$.ajax({
 							url: api.url + 'metrics',
 							error(r) {
-								clearTimeout(pingId);
-								out.html('');
+								if (count++ < 10)
+									setTimeout(restart, 1000);
+								else {
+									clearTimeout(pingId);
+									console.log(r);
+									out.html(r.responseText);
+								}
 							},
 							success(r2) {
 								if (time > r2['process.start.time']['measurements'][0].value * 1000)
