@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class FindappSupportCenterApplication {
 	public static void main(String[] args) {
 		final SpringApplicationBuilder app = new SpringApplicationBuilder(FindappSupportCenterApplication.class);
-		app.application().addListeners(new ApplicationPidFileWriter("./shutdownSC.pid"));
+		app.application().addListeners(new ApplicationPidFileWriter("pid/SC.pid"));
 		app.web(WebApplicationType.NONE);
 		app.run(args);
 	}
