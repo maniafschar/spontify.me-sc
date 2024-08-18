@@ -36,7 +36,7 @@ class lists {
 		e.setAttribute('class', 'buttons');
 		var s = '', sqls =
 			[
-				{ label: 'log', sql: 'log.createdAt>{date-12h} and log.uri not like \'/support/%\' and log.uri not like \'/marketing/%\' and lower(ip.org) not like \'%facebook%\' and lower(ip.org) not like \'%google%\'' },
+				{ label: 'log', sql: 'log.createdAt>{date-12h} and log.uri not like \'/support/%\' and lower(ip.org) not like \'%facebook%\' and lower(ip.org) not like \'%google%\' and lower(ip.org) not like \'%amazon%\' and lower(ip.org) not like \'%microsoft%\'' },
 				{ label: 'support', sql: 'log.createdAt>{date-3h} and log.uri like \'/support/%\'' },
 				{ label: 'error', sql: 'ticket.type=\'ERROR\'' },
 				{ label: 'ad', sql: 'log.createdAt>{date-1} and log.uri not like \'/%\'' },
