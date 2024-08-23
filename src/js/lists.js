@@ -180,9 +180,10 @@ class lists {
 			var widthTotal = parseInt(config.columns[0].width);
 			var addColumn = function (name, width) {
 				if (widthTotal < 100) {
-					if (name.indexOf('.') > 0)
-						name = name.substring(name.lastIndexOf('.') + 1);
-					config.columns.push({ data: name, title: name, width: (widthTotal + width > 100 ? 100 - widthTotal : width) + '%' });
+					var title = name;
+					if (title.indexOf('.') > 0)
+						title = title.substring(title.lastIndexOf('.') + 1);
+					config.columns.push({ data: name, title: title, width: (widthTotal + width > 100 ? 100 - widthTotal : width) + '%' });
 					widthTotal += width;
 				}
 			};
