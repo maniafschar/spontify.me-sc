@@ -151,9 +151,9 @@ class lists {
 				var d = api.convert(r[0], r[i]);
 				d.storage = JSON.parse(d.storage);
 				var keys = Object.keys(d.storage);
-				for (var i = 0; i < keys.length; i++) {
-					if (keys[i].indexOf('q') == 0)
-						d[keys[i]] = JSON.stringify(d.storage[keys[i]]);
+				for (var i2 = 0; i2 < keys.length; i2++) {
+					if (keys[i2].indexOf('q') == 0)
+						d[keys[i2]] = JSON.stringify(d.storage[keys[i2]]);
 				}
 				d.createdAt = start.getDisplayDate(d.createdAt);
 				d.modifiedAt = start.getDisplayDate(d.modifiedAt);
