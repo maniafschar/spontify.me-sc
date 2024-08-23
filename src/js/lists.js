@@ -192,7 +192,7 @@ class lists {
 			addColumn('finished', 5);
 			var keys = Object.keys(data[0].storage).sort();
 			for (var i = 0; i < keys.length; i++)
-				if (keys.indexOf('q') == 0)
+				if (keys[i].indexOf('q') == 0)
 					addColumn('storage.' + keys[i], 5);
 			lists.logTable = $('#log').DataTable(config);
 			lists.init();
