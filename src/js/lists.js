@@ -150,6 +150,11 @@ class lists {
 			for (var i = 1; i < r.length; i++) {
 				var d = api.convert(r[0], r[i]);
 				d.storage = JSON.parse(d.storage);
+				var keys = Object.keys(d.storage);
+				for (var i = 0; i < keys.length; i++) {
+					if (keys[i].indexOf('q') == 0)
+						d[keys[i]] = JSON.stringify(d.storage[keys[i]]);
+				}
 				d.createdAt = start.getDisplayDate(d.createdAt);
 				d.modifiedAt = start.getDisplayDate(d.modifiedAt);
 				data.push(d);
@@ -180,20 +185,18 @@ class lists {
 			var widthTotal = parseInt(config.columns[0].width);
 			var addColumn = function (name, width) {
 				if (widthTotal < 100) {
-					var title = name;
-					if (title.indexOf('.') > 0)
-						title = title.substring(title.lastIndexOf('.') + 1);
-					config.columns.push({ data: name, title: title, width: (widthTotal + width > 100 ? 100 - widthTotal : width) + '%' });
+					config.columns.push({ data: name, title: name, width: (widthTotal + width > 100 ? 100 - widthTotal : width) + '%' });
 					widthTotal += width;
 				}
 			};
 			addColumn('createdAt', 5);
 			addColumn('modifiedAt', 5);
 			addColumn('finished', 5);
-			var keys = Object.keys(data[0].storage).sort();
-			for (var i = 0; i < keys.length; i++)
+			var keys = Object.keys(data[0]).sort();
+			for (var i = 0; i < keys.length; i++) {
 				if (keys[i].indexOf('q') == 0)
-					addColumn('storage.' + keys[i], 5);
+					addColumn(keys[i], 5);
+			}
 			lists.logTable = $('#log').DataTable(config);
 			lists.init();
 		});
