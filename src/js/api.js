@@ -111,7 +111,6 @@ class api {
 	static marketing(id, callback) {
 		$.ajax({
 			url: api.url + 'marketing/' + id,
-			type: 'POST',
 			success(r) {
 				callback(r);
 			}
