@@ -44,14 +44,14 @@ class lists {
 				{ label: 'email', sql: 'ticket.createdAt>{date-1} and ticket.type=\'EMAIL\'' },
 				{ label: 'registration', sql: 'ticket.type=\'REGISTRATION\'' },
 				{ label: 'block', sql: 'ticket.type=\'BLOCK\'' },
-				{ label: 'location', sql: 'ticket.createdAt>{date-1} and ticket.type=\'LOCATION\'' },
-				{ label: 'google', sql: 'ticket.createdAt>{date-1} and ticket.type=\'GOOGLE\'' }
+				{ label: 'location', sql: 'ticket.createdAt>{date-1} and ticket.type=\'LOCATION\'' }
 			];
 		for (var i = 0; i < 3; i++)
 			s += '<button class="bgColor" onclick="lists.search(event,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button>';
 		s += '<button class="bgColor" onclick="lists.more()">more</button><more style="display:none;">';
 		for (var i = 3; i < sqls.length; i++)
 			s += '<button class="bgColor" onclick="lists.search(event,&quot;' + sqls[i].sql + '&quot;)">' + sqls[i].label + '</button>';
+		s += '<button class="bgColor" onclick="lists.marketing()">marketing</button>';
 		s += '</more>';
 		e.innerHTML = s;
 		$('#log_wrapper')[0].insertBefore(e, $('#log')[0]);
@@ -143,6 +143,58 @@ class lists {
 	}
 	static filter() {
 		$("#log").DataTable().search($('#log_filter input').val()).draw()
+	}
+	static marketing() {
+		api.marketing(180, function (r) {
+			var data = [];
+			for (var i = 1; i < r.length; i++) {
+				var d = api.convert(r[0], r[i]);
+				d.storage = JSON.parse(d.storage);
+				d.createdAt = start.getDisplayDate(d.createdAt);
+				d.modifiedAt = start.getDisplayDate(d.modifiedAt);
+				data.push(d);
+			}
+			// prepare table
+			if (lists.logTable) {
+				lists.logTable.destroy();
+				$('#log').empty();
+			}
+			var e = $('#log')[0];
+			e.parentNode.replaceChild(e.cloneNode(true), e);
+			$('#log').css('display', 'block');
+			$('#log_wrapper').css('display', 'block');
+			var config = {
+				data: data,
+				columns: [
+					{
+						className: 'details-control',
+						orderable: false,
+						data: null,
+						defaultContent: '',
+						width: '5%'
+					}
+				],
+				autoWidth: false,
+				paging: false
+			};
+			var widthTotal = parseInt(config.columns[0].width);
+			var addColumn = function (name, width) {
+				if (widthTotal < 100) {
+					if (name.indexOf('.') > 0)
+						name = name.substring(name.lastIndexOf('.') + 1);
+					config.columns.push({ data: name, title: name, width: (widthTotal + width > 100 ? 100 - widthTotal : width) + '%' });
+					widthTotal += width;
+				}
+			};
+			addColumn('createdAt', 5);
+			addColumn('modifiedAt', 5);
+			addColumn('finished', 5);
+			var keys = Object.keys(data[0].storage).sort();
+			for (var i = 0; i < keys.length; i++)
+				addColumn('storage.' + keys[i], 5);
+			lists.logTable = $('#log').DataTable(config);
+			lists.init();
+		});
 	}
 	static open(s, i) {
 		$('#log tr').each(function () {
