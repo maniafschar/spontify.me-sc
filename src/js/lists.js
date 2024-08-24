@@ -146,9 +146,10 @@ class lists {
 	}
 	static marketing() {
 		api.marketing(180, function (r) {
+			var clientMarketing = api.convert(r.clientMarketing[0], r.clientMarketing[1]);
 			var data = [];
-			for (var i = 1; i < r.length; i++) {
-				var d = api.convert(r[0], r[i]);
+			for (var i = 1; i < r.contactMarketing.length; i++) {
+				var d = api.convert(r.contactMarketing[0], r.contactMarketing[i]);
 				d.storage = JSON.parse(d.storage);
 				var keys = Object.keys(d.storage);
 				for (var i2 = 0; i2 < keys.length; i2++) {
@@ -156,7 +157,7 @@ class lists {
 						d[keys[i2]] = JSON.stringify(d.storage[keys[i2]]);
 				}
 				d.createdAt = start.getDisplayDate(d.createdAt);
-				d.modifiedAt = start.getDisplayDate(d.modifiedAt);
+				d.modifiedAt = start.getDisplayDate(d.modifiedAt) || '';
 				data.push(d);
 			}
 			// prepare table
@@ -183,19 +184,13 @@ class lists {
 				paging: false
 			};
 			var widthTotal = parseInt(config.columns[0].width);
-			var addColumn = function (name, width) {
-				if (widthTotal < 100) {
-					config.columns.push({ data: name, title: name, width: (widthTotal + width > 100 ? 100 - widthTotal : width) + '%' });
-					widthTotal += width;
-				}
-			};
-			addColumn('createdAt', 5);
-			addColumn('modifiedAt', 5);
-			addColumn('finished', 5);
+			config.columns.push({ data: 'createdAt', title: 'createdAt', width: '5%' });
+			config.columns.push({ data: 'modifiedAt', title: 'modifiedAt', width: '5%' });
+			config.columns.push({ data: 'finished', title: 'finished', width: '5%' });
 			var keys = Object.keys(data[0]).sort();
 			for (var i = 0; i < keys.length; i++) {
 				if (keys[i].indexOf('q') == 0)
-					addColumn(keys[i], 5);
+					config.columns.push({ data: keys[i], title: keys[i], width: '5%' });
 			}
 			lists.logTable = $('#log').DataTable(config);
 			lists.init();
