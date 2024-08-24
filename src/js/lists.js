@@ -163,15 +163,16 @@ class lists {
 				for (var i2 = 0; i2 < keys.length; i2++) {
 					if (keys[i2].indexOf('q') == 0) {
 						var a = d.storage[keys[i2]];
+						var k = clientMarketing.storage.questions[keys[i2].substring(1)].id;
 						if (a.a && a.a.length) {
 							if (a.a.length > 1 || a.t)
-								d[keys[i2]] = ('[' + answerKeys(keys[i2], a.a)).replace(/,/g, '|') + '] ';
+								d[k] = ('[' + answerKeys(keys[i2], a.a)).replace(/,/g, '|') + '] ';
 							else
-								d[keys[i2]] = answerKeys(keys[i2], a.a);
+								d[k] = answerKeys(keys[i2], a.a);
 						} else
-							d[keys[i2]] = '';
+							d[k] = '';
 						if (a.t)
-							d[keys[i2]] += a.t;
+							d[k] += a.t;
 					}
 				}
 				d.createdAt = start.getDisplayDate(d.createdAt);
@@ -205,7 +206,7 @@ class lists {
 			};
 			var keys = Object.keys(clientMarketing.storage.questions).sort();
 			for (var i = 0; i < keys.length; i++)
-				config.columns.push({ data: 'q' + keys[i], title: clientMarketing.storage.questions[keys[i]].id, defaultContent: '', width: '5%' });
+				config.columns.push({ data: clientMarketing.storage.questions[keys[i]].id, title: clientMarketing.storage.questions[keys[i]].id, defaultContent: '', width: '5%' });
 			lists.logTable = $('#log').DataTable(config);
 			$('#log tbody').on('click', 'td.details-control', function () {
 				var tr = $(this).closest('tr');
