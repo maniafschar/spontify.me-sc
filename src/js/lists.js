@@ -162,9 +162,8 @@ class lists {
 				}
 				for (var i2 = 0; i2 < keys.length; i2++) {
 					if (keys[i2].indexOf('q') == 0) {
-						var answer = d.storage[keys[i2]];
-						d[keys[i2]] = (answer.a && answer.a.length ? 'a:' + answerKeys(keys[i2], answer.a) : '');
-						d[keys[i2]] += (answer.t ? (d[keys[i2]] ? '|' : '') + 't:' + answer.t : '');
+						var a = d.storage[keys[i2]];
+						d[keys[i2]] = (a.a && a.a.length ? ('[' + answerKeys(keys[i2], a.a)).replace(/,/g, '|') + ']' : '') + (a.t ? a.t : '');
 					}
 				}
 				d.createdAt = start.getDisplayDate(d.createdAt);
