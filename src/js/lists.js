@@ -154,7 +154,7 @@ class lists {
 				d.storage = JSON.parse(d.storage);
 				var keys = Object.keys(d.storage);
 				var answerKeys = function (q, answers) {
-					var a = clientMarketing.storage.questions[q].answers;
+					var a = clientMarketing.storage.questions[q.substring(1)].answers;
 					var n = [];
 					for (var i = 0; i < answers.length; i++)
 						n.push(a[answers[i]].key ? a[answers[i]].key : answers[i]);
