@@ -153,17 +153,17 @@ class lists {
 				var d = api.convert(r.contactMarketing[0], r.contactMarketing[i]);
 				d.storage = JSON.parse(d.storage);
 				var keys = Object.keys(d.storage);
-				var answerKeys = function (i, answers) {
-					var a = clientMarketing.storage.questions['q' + i].answers;
+				var answerKeys = function (q, answers) {
+					var a = clientMarketing.storage.questions[q].answers;
 					var n = [];
-					for (var i2 = 0; i2 < answers.length; i2++)
-						n.push(a[answers[i2]].key ? a[answers[i2]].key : answers[i2]);
+					for (var i = 0; i < answers.length; i++)
+						n.push(a[answers[i]].key ? a[answers[i]].key : answers[i]);
 					return n;
 				}
 				for (var i2 = 0; i2 < keys.length; i2++) {
 					if (keys[i2].indexOf('q') == 0) {
 						var answer = d.storage[keys[i2]];
-						d[keys[i2]] = (answer.a && answer.a.length ? 'a:' + answerKeys(i2, answer.a) : '');
+						d[keys[i2]] = (answer.a && answer.a.length ? 'a:' + answerKeys(keys[i2], answer.a) : '');
 						d[keys[i2]] += (answer.t ? (d[keys[i2]] ? '|' : '') + 't:' + answer.t : '');
 					}
 				}
