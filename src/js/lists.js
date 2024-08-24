@@ -156,9 +156,8 @@ class lists {
 				for (var i2 = 0; i2 < keys.length; i2++) {
 					if (keys[i2].indexOf('q') == 0) {
 						var answer = d.storage[keys[i2]];
-						d[keys[i2]] = (answer.a && answer.a.length ? '|a:' + answer.a : '|');
-						d[keys[i2]] += (answer.t ? '|t:' + answer.t : '|');
-						d[keys[i2]] = d[keys[i2]].substring(1);
+						d[keys[i2]] = (answer.a && answer.a.length ? 'a:' + answer.a : '');
+						d[keys[i2]] += (answer.t ? (d[keys[i2]] ? '|' : '') + 't:' + answer.t : '');
 					}
 				}
 				d.createdAt = start.getDisplayDate(d.createdAt);
