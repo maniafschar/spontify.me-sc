@@ -183,14 +183,13 @@ class lists {
 				autoWidth: false,
 				paging: false
 			};
-			var widthTotal = parseInt(config.columns[0].width);
-			config.columns.push({ data: 'createdAt', title: 'createdAt', width: '5%' });
-			config.columns.push({ data: 'modifiedAt', title: 'modifiedAt', width: '5%' });
-			config.columns.push({ data: 'finished', title: 'finished', width: '5%' });
+			config.columns.push({ data: 'createdAt', title: 'createdAt', defaultContent: '', width: '5%' });
+			config.columns.push({ data: 'modifiedAt', title: 'modifiedAt', defaultContent: '', width: '5%' });
+			config.columns.push({ data: 'finished', title: 'finished', defaultContent: '', width: '5%' });
 			var keys = Object.keys(data[0]).sort();
 			for (var i = 0; i < keys.length; i++) {
 				if (keys[i].indexOf('q') == 0)
-					config.columns.push({ data: keys[i], title: keys[i], width: '5%' });
+					config.columns.push({ data: keys[i], title: keys[i], defaultContent: '', width: '5%' });
 			}
 			lists.logTable = $('#log').DataTable(config);
 			lists.init();
