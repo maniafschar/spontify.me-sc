@@ -163,7 +163,7 @@ class lists {
 				for (var i2 = 0; i2 < keys.length; i2++) {
 					if (keys[i2].indexOf('q') == 0) {
 						var a = d.storage[keys[i2]];
-						var k = clientMarketing.storage.questions[keys[i2]].id;
+						var k = clientMarketing.storage.questions[keys[i2].substring(1)].id;
 						if (a.a && a.a.length) {
 							if (a.a.length > 1 || a.t)
 								d[k] = ('[' + answerKeys(keys[i2], a.a)).replace(/,/g, '|') + '] ';
