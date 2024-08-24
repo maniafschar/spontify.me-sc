@@ -148,7 +148,7 @@ class lists {
 		api.marketing(180, function (r) {
 			var clientMarketing = api.convert(r.clientMarketing[0], r.clientMarketing[1]);
 			var data = [];
-			for (var i = 1; i < r.contactMarketing.length; i++) {
+			for (var i = r.contactMarketing.length; i > 0; i--) {
 				var d = api.convert(r.contactMarketing[0], r.contactMarketing[i]);
 				d.storage = JSON.parse(d.storage);
 				var keys = Object.keys(d.storage);
