@@ -165,7 +165,7 @@ class lists {
 						var a = d.storage[keys[i2]];
 						if (a.a && a.a.length) {
 							if (a.a.length > 1 || a.t)
-								d[keys[i2]] = ('[' + answerKeys(keys[i2], a.a)).replace(/,/g, '|') + ']';
+								d[keys[i2]] = ('[' + answerKeys(keys[i2], a.a)).replace(/,/g, '| ') + ']';
 							else
 								d[keys[i2]] = answerKeys(keys[i2], a.a);
 						} else
@@ -206,11 +206,9 @@ class lists {
 			config.columns.push({ data: 'modifiedAt', title: 'modifiedAt', defaultContent: '', width: '5%' });
 			config.columns.push({ data: 'finished', title: 'finished', defaultContent: '', width: '5%' });
 			config.columns.push({ data: 'locationId', title: 'locationId', defaultContent: '', width: '5%' });
-			var keys = Object.keys(data[0]).sort();
-			for (var i = 0; i < keys.length; i++) {
-				if (keys[i].indexOf('q') == 0)
-					config.columns.push({ data: keys[i], title: clientMarketing.storage.questions[keys[i].substring(1)].id, defaultContent: '', width: '5%' });
-			}
+			var keys = Object.keys(clientMarketing.storage.questions).sort();
+			for (var i = 0; i < keys.length; i++)
+				config.columns.push({ data: 'q' + keys[i], title: clientMarketing.storage.questions[keys[i]].id, defaultContent: '', width: '5%' });
 			lists.logTable = $('#log').DataTable(config);
 			lists.init();
 		});
