@@ -157,7 +157,7 @@ class lists {
 					var a = clientMarketing.storage.questions[q.substring(1)].answers;
 					var n = [];
 					for (var i = 0; i < answers.length; i++)
-						n.push(a[answers[i]].key ? a[answers[i]].key : answers[i] == 0 ? 'Nein' : answers[i] == 1 ? 'Ja' : answers[i]);
+						n.push(a[answers[i]].key ? a[answers[i]].key : answers[i]);
 					return n;
 				}
 				for (var i2 = 0; i2 < keys.length; i2++) {
