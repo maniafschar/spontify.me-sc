@@ -205,7 +205,7 @@ class lists {
 			};
 			var keys = Object.keys(clientMarketing.storage.questions).sort();
 			for (var i = 0; i < keys.length; i++)
-				config.columns.push({ data: clientMarketing.storage.questions[keys[i]].id, title: clientMarketing.storage.questions[keys[i]].id, defaultContent: '', width: '5%' });
+				config.columns.push({ data: 'q' + keys[i], title: clientMarketing.storage.questions[keys[i]].id, defaultContent: '', width: '5%' });
 			lists.logTable = $('#log').DataTable(config);
 			$('#log tbody').on('click', 'td.details-control', function () {
 				var tr = $(this).closest('tr');
