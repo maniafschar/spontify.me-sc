@@ -163,7 +163,15 @@ class lists {
 				for (var i2 = 0; i2 < keys.length; i2++) {
 					if (keys[i2].indexOf('q') == 0) {
 						var a = d.storage[keys[i2]];
-						d[keys[i2]] = (a.a && a.a.length ? ('[' + answerKeys(keys[i2], a.a)).replace(/,/g, '|') + ']' : '') + (a.t ? a.t : '');
+						if (a.a && a.a.length) {
+							if (a.a.length > 1)
+								d[keys[i2]] = ('[' + answerKeys(keys[i2], a.a)).replace(/,/g, '|') + ']';
+							else
+								d[keys[i2]] = answerKeys(keys[i2], a.a);
+						} else
+							d[keys[i2]] = '';
+						if (a.t)
+							d[keys[i2]] += a.t;
 					}
 				}
 				d.createdAt = start.getDisplayDate(d.createdAt);
