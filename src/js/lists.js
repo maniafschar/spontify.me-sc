@@ -177,6 +177,7 @@ class lists {
 				d.createdAt = start.getDisplayDate(d.createdAt);
 				d.modifiedAt = start.getDisplayDate(d.modifiedAt);
 				d.locationId = d.storage.locationId;
+				delete d.storage;
 				data.push(d);
 			}
 			// prepare table
