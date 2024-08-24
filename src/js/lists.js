@@ -210,6 +210,17 @@ class lists {
 			for (var i = 0; i < keys.length; i++)
 				config.columns.push({ data: 'q' + keys[i], title: clientMarketing.storage.questions[keys[i]].id, defaultContent: '', width: '5%' });
 			lists.logTable = $('#log').DataTable(config);
+			$('#log tbody').on('click', 'td.details-control', function () {
+				var tr = $(this).closest('tr');
+				var row = lists.logTable.row(tr);
+				if (row.child.isShown()) {
+					row.child.hide();
+					tr.removeClass('shown');
+				} else {
+					row.child(doc.showDetails(row.data())).show();
+					tr.addClass('shown');
+				}
+			});
 			lists.init();
 		});
 	}
