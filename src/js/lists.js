@@ -164,7 +164,7 @@ class lists {
 					if (keys[i2].indexOf('q') == 0) {
 						var a = d.storage[keys[i2]];
 						if (a.a && a.a.length) {
-							if (a.a.length > 1)
+							if (a.a.length > 1 || a.t)
 								d[keys[i2]] = ('[' + answerKeys(keys[i2], a.a)).replace(/,/g, '|') + ']';
 							else
 								d[keys[i2]] = answerKeys(keys[i2], a.a);
