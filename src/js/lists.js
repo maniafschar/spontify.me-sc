@@ -163,16 +163,15 @@ class lists {
 				for (var i2 = 0; i2 < keys.length; i2++) {
 					if (keys[i2].indexOf('q') == 0) {
 						var a = d.storage[keys[i2]];
-						var k = clientMarketing.storage.questions[keys[i2].substring(1)].id;
 						if (a.a && a.a.length) {
 							if (a.a.length > 1 || a.t)
-								d[k] = ('[' + answerKeys(keys[i2], a.a)).replace(/,/g, '|') + '] ';
+								d[keys[i2]] = ('[' + answerKeys(keys[i2], a.a)).replace(/,/g, '|') + '] ';
 							else
-								d[k] = answerKeys(keys[i2], a.a);
+								d[keys[i2]] = answerKeys(keys[i2], a.a);
 						} else
-							d[k] = '';
+							d[keys[i2]] = '';
 						if (a.t)
-							d[k] += a.t;
+							d[keys[i2]] += a.t;
 					}
 				}
 				d.createdAt = start.getDisplayDate(d.createdAt);
