@@ -183,7 +183,7 @@ class lists {
 			}
 			for (var i = 1; i < r.log.length; i++) {
 				var d = api.convert(r.log[0], r.log[i]);
-				d.createdAt = start.getDisplayDate(d.createdAt);
+				d.feedback = start.getDisplayDate(d.createdAt);
 				data.push(d);
 			}
 			// prepare table
