@@ -183,7 +183,7 @@ class lists {
 				delete d.storage;
 				data.push(d);
 			}
-			for (var i = 0; i < r.log.length; i++) {
+			for (var i = 1; i < r.log.length; i++) {
 				var d = api.convert(r.log[0], r.log[i]);
 				d.name = d.query.split('&')[1].substring(2);
 				if (!processed.includes(d.name)) {
