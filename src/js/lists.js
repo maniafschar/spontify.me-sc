@@ -181,6 +181,12 @@ class lists {
 				delete d.storage;
 				data.push(d);
 			}
+			for (var i = r.log.length - 1; i > 0; i--) {
+				var d = api.convert(r.log[0], r.log[i]);
+				d.name = d.ip;
+				d.address = start.getDisplayDate(d.createdAt);
+				data.push(d);
+			}
 			// prepare table
 			if (lists.logTable) {
 				lists.logTable.destroy();
