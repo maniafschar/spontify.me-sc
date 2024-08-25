@@ -149,6 +149,7 @@ class lists {
 			var clientMarketing = api.convert(r.clientMarketing[0], r.clientMarketing[1]);
 			clientMarketing.storage = JSON.parse(clientMarketing.storage);
 			var data = [];
+			var processed = [];
 			for (var i = r.contactMarketing.length - 1; i > 0; i--) {
 				var d = api.convert(r.contactMarketing[0], r.contactMarketing[i]);
 				d.storage = JSON.parse(d.storage);
@@ -178,14 +179,17 @@ class lists {
 				d.createdAt = start.getDisplayDate(d.createdAt);
 				d.modifiedAt = start.getDisplayDate(d.modifiedAt);
 				d.locationId = d.storage.locationId;
+				processed.push(d.locationId);
 				delete d.storage;
 				data.push(d);
 			}
-			for (var i = r.log.length - 1; i > 0; i--) {
+			for (var i = 0; i < r.log.length; i++) {
 				var d = api.convert(r.log[0], r.log[i]);
-				d.name = d.ip;
-				d.address = start.getDisplayDate(d.createdAt);
-				data.push(d);
+				d.name = d.query.spilt('&')[0].substring(2);
+				if (!processed.includes(d.name)) {
+					d.address = start.getDisplayDate(d.createdAt);
+					data.push(d);
+				}
 			}
 			// prepare table
 			if (lists.logTable) {
