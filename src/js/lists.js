@@ -181,8 +181,11 @@ class lists {
 				delete d.storage;
 				data.push(d);
 			}
-			for (var i = 1; i < r.log.length; i++)
-				data.push(api.convert(r.log[0], r.log[i]));
+			for (var i = 1; i < r.log.length; i++) {
+				var d = api.convert(r.log[0], r.log[i]);
+				d.createdAt = start.getDisplayDate(d.createdAt);
+				data.push(d);
+			}
 			// prepare table
 			if (lists.logTable) {
 				lists.logTable.destroy();
