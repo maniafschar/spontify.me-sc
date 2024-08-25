@@ -185,7 +185,7 @@ class lists {
 			}
 			for (var i = 0; i < r.log.length; i++) {
 				var d = api.convert(r.log[0], r.log[i]);
-				d.name = d.query.split('&')[0].substring(2);
+				d.name = d.query.split('&')[1].substring(2);
 				if (!processed.includes(d.name)) {
 					d.address = start.getDisplayDate(d.createdAt);
 					data.push(d);
