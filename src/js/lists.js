@@ -148,7 +148,7 @@ class lists {
 		api.marketing(180, function (r) {
 			var clientMarketing = api.convert(r.clientMarketing[0], r.clientMarketing[1]);
 			clientMarketing.storage = JSON.parse(clientMarketing.storage);
-			var data = [];
+			var data = [], finished = 0;
 			for (var i = r.contactMarketing.length - 1; i > 0; i--) {
 				var d = api.convert(r.contactMarketing[0], r.contactMarketing[i]);
 				d.storage = JSON.parse(d.storage);
@@ -180,6 +180,8 @@ class lists {
 				d.locationId = d.storage.locationId;
 				delete d.storage;
 				data.push(d);
+				if (d.finished)
+					finished++;
 			}
 			for (var i = 1; i < r.log.length; i++) {
 				var d = api.convert(r.log[0], r.log[i]);
@@ -210,8 +212,11 @@ class lists {
 				paging: false
 			};
 			var keys = Object.keys(clientMarketing.storage.questions).sort();
-			for (var i = 0; i < keys.length; i++)
+			for (var i = 0; i < keys.length; i++) {
 				config.columns.push({ data: clientMarketing.storage.questions[keys[i]].id, title: clientMarketing.storage.questions[keys[i]].id, defaultContent: '', width: '5%' });
+				if (i == 0)
+					config.columns.push({ data: 'finished', title: 'finished', defaultContent: '', width: '5%' });
+			}
 			lists.logTable = $('#log').DataTable(config);
 			$('#log tbody').on('click', 'td.details-control', function () {
 				var tr = $(this).closest('tr');
@@ -224,6 +229,7 @@ class lists {
 					tr.addClass('shown');
 				}
 			});
+			$('#log text').html = 'participate: ' + r.contactMarketing.length + ', finished: ' + finished + ' &middot; ' + parseInt(finished / r.contactMarketing.length + 0.5) + '%, opened: ' + r.log.length;
 			lists.init();
 		});
 	}
