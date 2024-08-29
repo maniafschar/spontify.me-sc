@@ -28,6 +28,7 @@ class lists {
 		$('#log_wrapper').css('display', 'block');
 	}
 	static init() {
+		$('#log_wrapper')[0].insertBefore(document.createElement('text'), null);
 		var e = document.createElement('input');
 		e.setAttribute('class', 'log_search');
 		e.setAttribute('onkeyup', 'lists.search(event)');
