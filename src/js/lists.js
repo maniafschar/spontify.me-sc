@@ -28,7 +28,6 @@ class lists {
 		$('#log_wrapper').css('display', 'block');
 	}
 	static init() {
-		$('#log_wrapper')[0].insertBefore(document.createElement('text'), null);
 		var e = document.createElement('input');
 		e.setAttribute('class', 'log_search');
 		e.setAttribute('onkeyup', 'lists.search(event)');
@@ -230,7 +229,7 @@ class lists {
 					tr.addClass('shown');
 				}
 			});
-			$('#log text').html = 'participate: ' + r.contactMarketing.length + ', finished: ' + finished + ' &middot; ' + parseInt(finished / r.contactMarketing.length + 0.5) + '%, opened: ' + r.log.length;
+			alert('participate: ' + r.contactMarketing.length + ', finished: ' + finished + ' &middot; ' + parseInt(finished / r.contactMarketing.length + 0.5) + '%, opened: ' + r.log.length);
 			lists.init();
 		});
 	}
