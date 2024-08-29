@@ -229,7 +229,7 @@ class lists {
 					tr.addClass('shown');
 				}
 			});
-			alert('participate: ' + (r.contactMarketing.length - 1) + '\nfinished: ' + finished + ' &middot; ' + parseInt(finished / (r.contactMarketing.length - 1) * 100 + 0.5) + '%\nopened: ' + (r.log.length - 1));
+			alert('participate: ' + (r.contactMarketing.length - 1) + '\nfinished: ' + finished + ' · ' + parseInt(finished / (r.contactMarketing.length - 1) * 100 + 0.5) + '%\nopened: ' + (r.log.length - 1));
 			lists.init();
 		});
 	}
