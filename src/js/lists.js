@@ -183,7 +183,6 @@ class lists {
 				if (d.finished)
 					finished++;
 			}
-			console.log(data);
 			for (var i = 1; i < r.log.length; i++) {
 				var d = api.convert(r.log[0], r.log[i]);
 				d.feedback = start.getDisplayDate(d.createdAt);
