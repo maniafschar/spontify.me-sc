@@ -146,7 +146,6 @@ class lists {
 	}
 	static marketing() {
 		api.marketing(180, function (r) {
-			var out = '[';
 			var clientMarketing = api.convert(r.clientMarketing[0], r.clientMarketing[1]);
 			clientMarketing.storage = JSON.parse(clientMarketing.storage);
 			var data = [], finished = 0;
@@ -181,11 +180,10 @@ class lists {
 				d.locationId = d.storage.locationId;
 				delete d.storage;
 				data.push(d);
-				out += JSON.stringify(d);
 				if (d.finished)
 					finished++;
 			}
-			$('out').html(out + ']');
+			console.log(data);
 			for (var i = 1; i < r.log.length; i++) {
 				var d = api.convert(r.log[0], r.log[i]);
 				d.feedback = start.getDisplayDate(d.createdAt);
