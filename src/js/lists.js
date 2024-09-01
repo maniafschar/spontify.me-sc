@@ -178,6 +178,7 @@ class lists {
 				d.createdAt = start.getDisplayDate(d.createdAt);
 				d.modifiedAt = start.getDisplayDate(d.modifiedAt);
 				d.locationId = d.storage.locationId;
+				d.hash = d.storage.hash;
 				delete d.storage;
 				data.push(d);
 				if (d.finished)
