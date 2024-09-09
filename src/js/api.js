@@ -17,16 +17,15 @@ class api {
 	static build(path) {
 		var out = $('build code.output');
 		out.html('Running.');
-		var time = new Date().getTime();
+		var time = new Date();
 		var calcTime = function () {
-			return 'request took ' + ((new Date().getTime() - time) / 1000) + ' seconds\n';
+			return 'request from ' + time.toLocaleString() + ' took ' + ((new Date().getTime() - time.getTime()) / 1000) + ' seconds\n';
 		}
 		var ping = function () {
 			pingId = setTimeout(ping, 1000);
 			out.html(out.html() + '.');
 		}
 		var pingId = setTimeout(ping, 1000);
-		var time = new Date().getTime();
 		$.ajax({
 			url: api.url + 'build/' + path,
 			type: 'POST',
@@ -49,7 +48,7 @@ class api {
 								}
 							},
 							success(r2) {
-								if (time > r2['process.start.time']['measurements'][0].value * 1000)
+								if (time.getTime() > r2['process.start.time']['measurements'][0].value * 1000)
 									setTimeout(restart, 1000);
 								else {
 									clearTimeout(pingId);
