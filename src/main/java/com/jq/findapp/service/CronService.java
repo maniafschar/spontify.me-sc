@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 import com.jq.findapp.api.external.ApplicationApi;
 
 @Component
-public class SchedulerService {
+public class CronService {
 	@Autowired
 	private ApplicationApi applicationApi;
 
 	@Scheduled(cron = "0 */10 * * * *")
-	public void scheduler() throws Exception {
-		applicationApi.scheduler();
+	public void cron() throws Exception {
+		applicationApi.cron();
 	}
 
 	@Scheduled(cron = "0 * * * * *")
