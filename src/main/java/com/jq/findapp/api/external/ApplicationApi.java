@@ -23,8 +23,8 @@ public class ApplicationApi {
 	@Value("${app.restartWeb}")
 	private String restartWeb;
 
-	@Value("${app.scheduler.secret}")
-	private String schedulerSecret;
+	@Value("${app.cron.secret}")
+	private String cronSecret;
 
 	@Value("${app.mail.address}")
 	private String address;
@@ -40,9 +40,9 @@ public class ApplicationApi {
 
 	private volatile long restart = 0;
 
-	public void scheduler() {
-		WebClient.create(this.apiBaseUrl + "scheduler").put()
-				.header("secret", this.schedulerSecret).retrieve().toEntity(Void.class).block();
+	public void cron() {
+		WebClient.create(this.apiBaseUrl + "cron").put()
+				.header("secret", this.cronSecret).retrieve().toEntity(Void.class).block();
 	}
 
 	public void healthcheck() throws Exception {
@@ -50,7 +50,7 @@ public class ApplicationApi {
 			this.check(this.restartWeb, 4,
 					() -> WebClient.create(this.observableUrl).get().retrieve().toEntity(Void.class).block());
 			this.check(this.restartApp, 15, () -> WebClient.create(this.apiBaseUrl + "healthcheck").get()
-					.header("secret", this.schedulerSecret).retrieve().toEntity(Void.class).block());
+					.header("secret", this.cronSecret).retrieve().toEntity(Void.class).block());
 		}
 	}
 
