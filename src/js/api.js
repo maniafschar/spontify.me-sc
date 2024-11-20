@@ -153,6 +153,15 @@ class api {
 			}
 		});
 	}
+	static run(id) {
+		$.ajax({
+			url: api.url + 'run/' + id,
+			type: 'POST',
+			success(r) {
+				console.log(r);
+			}
+		});
+	}
 	static ticketDelete(id, event) {
 		$.ajax({
 			url: api.url + 'ticket/' + id,
