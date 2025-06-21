@@ -5,7 +5,7 @@ import { sha256, start } from "./start";
 export { api };
 
 class api {
-	static url = 'https://skills.community/rest/support/';
+	static url = 'https://fan-club.online/rest/support/';
 
 	static beforeServerCall(xhr) {
 		var salt = ('' + new Date().getTime() + Math.random()).replace(/[01]\./, '.');
